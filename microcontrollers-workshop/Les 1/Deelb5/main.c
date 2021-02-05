@@ -1,8 +1,8 @@
 /*
- * Deelb5.c
+ * DeelB5.c
  *
  * Created: 2/3/2021 12:25:04 PM
- * Author : jorn & Nic
+ * Author : Nic & Jorn
  */ 
 
 #define  F_CPU 8e6
