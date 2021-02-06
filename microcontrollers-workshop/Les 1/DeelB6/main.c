@@ -21,7 +21,7 @@ void wait( int ms ){
 int main( void ){
 
     DDRD = 0b11111111;   
-	int buttonPress = 0;      
+	int buttonPress = 2;      
 
     while (1){
         
