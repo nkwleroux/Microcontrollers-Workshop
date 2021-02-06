@@ -10,25 +10,25 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-typedef enum { false, true } bool;
+int buttonPress = 2;     
 
 void wait( int ms ){
     for (int i=0; i<ms; i++) {
-        _delay_ms( 1 );
+		
+		_delay_ms( 1 );
+		
+		if(PINC & 0x01){
+			buttonPress++;
+		};
     }
 }
 
 int main( void ){
 
     DDRD = 0b11111111;   
-	int buttonPress = 2;      
-
+ 
     while (1){
-        
-        if(PINC & 0x01){
-			buttonPress++;
-        };
-        
+    
         if(buttonPress % 2 == 0){
 			PORTD = 0x80;
 			wait(1000);
