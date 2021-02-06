@@ -25,7 +25,7 @@ int main( void ){
 
     while (1){
         
-        if(PINC & 0x01){
+        if(PINC & 0x00){
 			if(buttonPress == 1){
 				buttonPress = 0;
 			}
@@ -38,7 +38,7 @@ int main( void ){
 			wait(1000);
         };
 		
-		if(PINC & 0x01){
+		if(PINC & 0x00){
 			if(buttonPress == 0){
 				buttonPress = 1;
 			}
@@ -50,8 +50,6 @@ int main( void ){
 			PORTD = 0x00;
 			wait(4000);
         };
-        
-        
         
     }
         
