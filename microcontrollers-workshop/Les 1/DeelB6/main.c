@@ -25,24 +25,16 @@ int main( void ){
 
     while (1){
         
-        if(PINC & 0x00){
-			if(buttonPress == 1){
-				buttonPress = 0;
-			}
+        if(PINC & 0x01){
+			buttonPress = !buttonPress;
         };
         
         if(buttonPress == 0){
 			PORTD = 0x80;
 			wait(1000);
-			PORTD = 0x00;
+			PORTD = 0x08;
 			wait(1000);
         };
-		
-		if(PINC & 0x00){
-			if(buttonPress == 0){
-				buttonPress = 1;
-			}
-		};
         
         if(buttonPress == 1){
 			PORTD = 0x80;
