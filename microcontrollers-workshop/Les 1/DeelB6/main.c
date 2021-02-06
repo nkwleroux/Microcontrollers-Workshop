@@ -37,7 +37,7 @@ int main( void ){
         };
         
         if(buttonPress % 2 == 1){
-			PORTD = 0x80;
+			PORTD = 0x40;
 			wait(4000);
 			PORTD = 0x00;
 			wait(4000);
