@@ -32,14 +32,14 @@ int main( void ){
         if(buttonPress % 2 == 0){
 			PORTD = 0x80;
 			wait(1000);
-			PORTD = 0x08;
+			PORTD = 0x00;
 			wait(1000);
         };
         
         if(buttonPress % 2 == 1){
 			PORTD = 0x80;
 			wait(4000);
-			PORTD = 0x80;
+			PORTD = 0x00;
 			wait(4000);
         };
         
