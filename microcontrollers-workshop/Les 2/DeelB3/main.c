@@ -12,16 +12,16 @@
 
 const unsigned char Numbers [10] = {
 	// dPgfe dcba
-	0b 0011 1111, // 0
-	0b 0000 0110, // 1
-	0b 0101 1011, // 2
-	0b 0100 1111, // 3
-	0b 0110 0110, // 4
-	0b 0110 1101, // 5
-	0b 0111 1101, // 6
-	0b 0000 0111, // 7
-	0b 0111 1111, // 8
-	0b 0110 1111, // 9
+	0b00111111, // 0
+	0b00000110, // 1
+	0b01011011, // 2
+	0b01001111, // 3
+	0b01100110, // 4
+	0b01101101, // 5
+	0b01111101, // 6
+	0b00000111, // 7
+	0b01111111, // 8
+	0b01101111, // 9
 };
 
 void display(int digit);
@@ -29,11 +29,12 @@ void wait( int ms );
 
 int main(void)
 {
-	PORTC = 0b11111111;
+	DDRC = 0b11111111;
+	//PORTC = 0b11111111;
     /* Replace with your application code */
     while (1) 
     {
-		for (int i; i < 10; i++;)
+		for (int i = 0; i < 10; i++)
 		{
 			PORTC= Numbers[i];
 			wait(100);
