@@ -38,19 +38,19 @@ void setCharliePlexingLed(int lednr) {
 		break;
 	case 2 :
 		DDRD = 0b00000011;
-		PORTD = PORTD >> 1;
+		PORTD = PORTD << 1;
 		break;
 	case 3 :
 		DDRD = 0b00000110;
-		PORTD = PORTD >> 1;
+		PORTD = PORTD << 1;
 		break;
 	case 4 :
 		DDRD = 0b00000110;
-		PORTD = PORTD >> 2;
+		PORTD = PORTD << 2;
 		break;
 	case 5 :
 		DDRD = 0b00000101;
-		PORTD = PORTD >> 2;
+		PORTD = PORTD << 2;
 		break;
 	case 6 :
 		DDRD = 0b00000101;
