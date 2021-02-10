@@ -2,7 +2,7 @@
  * DeelB7B.c
  *
  * Created: 10/2/2021 9:07:30 AM
- * Author : Nic
+ * Author : Nic & Jorn
  */ 
 
 #define F_CPU 8e6
@@ -10,7 +10,6 @@
 #include <util/delay.h>
 
 void setCharliePlexingLed();
-void resetLeds();
 void wait();
 
 int main(void)
@@ -26,7 +25,11 @@ int main(void)
 }
 
 void setCharliePlexingLed(int lednr) {
-	resetLeds();
+	//Resets led
+	DDRD = 0b00000111; //0x07
+	PORTD = 0x00;
+	DDRD = 0b00000000; //0x00
+	
 	PORTD = 0x01;
 	switch (lednr)
 	{
@@ -53,12 +56,6 @@ void setCharliePlexingLed(int lednr) {
 		DDRD = 0b00000101; //0x05
 		break;
 	}
-}
-
-void resetLeds() {
-	DDRD = 0b00000111; //0x07
-	PORTD = 0x00;
-	DDRD = 0b00000000; //0x00
 }
 
 void wait( int ms ){
