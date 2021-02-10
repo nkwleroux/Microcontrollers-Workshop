@@ -2,7 +2,7 @@
  * DeelB2.c
  *
  * Created: 10/2/2021 10:30:57 AM
- * Author : Nic
+ * Author : Nic & Jorn
  */ 
 
 #define F_CPU 8e6
@@ -17,7 +17,7 @@ ISR( INT0_vect ) {
 
 
 ISR( INT1_vect ) {
-	PORTD |= (1>>5);
+	PORTD |= (1>>4);
 }
 
 ISR( INT2_vect){
@@ -35,11 +35,10 @@ int main(void)
 	
 	sei();
 		
-    /* Replace with your application code */
     while (1) 
     {
     }
-	//test
+	
 	return 1;
 }
 
