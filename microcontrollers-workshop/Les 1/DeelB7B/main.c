@@ -17,13 +17,13 @@ int main(void)
 {
     while (1) 
     {
-		for (int i = 0; i < 6; i++)
+		for (int i = 1; i < 7; i++)
 		{
 			setCharliePlexingLed(i);
-			wait(250);
+			wait(10);
 		}
 		resetLeds(); // resets leds.
-		wait(1000); // waits 1000 miliseconds.
+		wait(50); // waits 1000 miliseconds.
     }
 }
 
