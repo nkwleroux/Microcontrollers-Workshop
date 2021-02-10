@@ -22,14 +22,14 @@ ISR( INT0_vect ) {
 
 
 ISR( INT1_vect ) {
-	PORTD |= (1<<3);
+	PORTD &= ~(1<<i);
+	if(i > 3){
+		i--;
+	}
 }
 
 ISR( INT2_vect){
-	PORTD &= ~(1<<i);
-	if(i > 4){
-	i--;
-	}
+	PORTD &= ~(1<<0);
 }
 
 
@@ -38,7 +38,7 @@ int main(void)
 	// Init I/O
 	DDRD = 0xF0;
 	
-	EICRA |= 0x2F; //INT2 falling edge. INIT1 en INIT0 rising edge.
+	EICRA |= 0x2B; //INT2 falling edge. INIT1 en INIT0 rising edge.
 	EIMSK |= 0x07; //Enable INIT 0 - 2.
 	
 	sei();
