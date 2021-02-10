@@ -22,53 +22,43 @@ int main(void)
 			setCharliePlexingLed(i);
 			wait(250);
 		}
-		resetLeds(); // resets leds.
-		wait(1000); // waits 1000 miliseconds.
     }
 }
 
-// Switch case which sets the selected led and configures the pins accordingly.
 void setCharliePlexingLed(int lednr) {
 	resetLeds();
-	//PORTD = 0x01;
+	PORTD = 0x01;
 	switch (lednr)
 	{
 	case 1 :
-		DDRD = 0b00000011;
-		PORTD = 0b00000011;
+		DDRD = 0b00000011;  //0x03
 		break;
 	case 2 :
-		DDRD = 0b00000011;
-		PORTD = 0b00000011;
-		//PORTD = PORTD << 1;
+		DDRD = 0b00000011;  //0x03
+		PORTD = PORTD << 1; //0x02
 		break;
 	case 3 :
-		DDRD = 0b00000110;
-		//PORTD = PORTD << 1;
+		DDRD = 0b00000110;  //0x06
+		PORTD = PORTD << 1; //0x02
 		break;
 	case 4 :
-		DDRD = 0b00000110;
-		//PORTD = PORTD << 2;
+		DDRD = 0b00000110;  //0x06
+		PORTD = PORTD << 2; //0x04
 		break;
 	case 5 :
-		DDRD = 0b00000101;
-		//PORTD = PORTD << 2;
+		DDRD = 0b00000101;  //0x05
+		PORTD = PORTD << 2; //0x04
 		break;
 	case 6 :
-		DDRD = 0b00000101;
+		DDRD = 0b00000101; //0x05
 		break;
 	}
 }
 
-int matrix[6][3]{
-		{}
-	};
-
-// Turns all the leds off.
 void resetLeds() {
-	DDRD = 0b00000111;
+	DDRD = 0b00000111; //0x07
 	PORTD = 0x00;
-	DDRD = 0b00000000;
+	DDRD = 0b00000000; //0x00
 }
 
 void wait( int ms ){
