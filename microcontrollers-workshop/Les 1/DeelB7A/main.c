@@ -3,6 +3,8 @@
  *
  * Created: 06/2/2021 1:45:59 PM
  * Author : Nic
+ *
+ * Dit opdracht is niet af.
  */ 
 
 #define F_CPU 8e6
