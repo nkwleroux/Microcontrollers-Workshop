@@ -11,17 +11,21 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
+int i = 0;
+
 ISR( INT0_vect ) {
-	PORTD |= (1<<5);
+	i++;
+	PORTD |= (1<<i);
 }
 
 
 ISR( INT1_vect ) {
-	PORTD |= (1>>4);
+	PORTD |= (1<<3);
 }
 
 ISR( INT2_vect){
-	PORTD &= ~(1<<5);
+	PORTD &= ~(1<<i);
+	i--;
 }
 
 
