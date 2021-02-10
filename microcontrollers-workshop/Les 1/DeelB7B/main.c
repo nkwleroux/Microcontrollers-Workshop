@@ -30,30 +30,35 @@ int main(void)
 // Switch case which sets the selected led and configures the pins accordingly.
 void setCharliePlexingLed(int lednr) {
 	resetLeds();
-	PORTD = 0x01;
 	switch (lednr)
 	{
 	case 1 :
 		DDRD = 0b00000011;
+		PORTD = 0x01;
 		break;
 	case 2 :
 		DDRD = 0b00000011;
-		PORTD = PORTD >> 1;
+		//PORTD = PORTD >> 1;
+		PORTD = 0x02;
 		break;
 	case 3 :
 		DDRD = 0b00000110;
-		PORTD = PORTD >> 1;
+		//PORTD = PORTD >> 1;
+		PORTD = 0x02;
 		break;
 	case 4 :
 		DDRD = 0b00000110;
-		PORTD = PORTD >> 2;
+		//PORTD = PORTD >> 2;
+		PORTD = 0x04;
 		break;
 	case 5 :
 		DDRD = 0b00000101;
-		PORTD = PORTD >> 2;
+		//PORTD = PORTD >> 2;
+		PORTD = 0x04;
 		break;
 	case 6 :
 		DDRD = 0b00000101;
+		PORTD = 0x01;
 		break;
 	}
 }
