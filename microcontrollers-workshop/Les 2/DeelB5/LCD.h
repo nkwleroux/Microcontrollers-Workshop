@@ -18,6 +18,8 @@ void wait( int ms );
 
 void init_hello_world();
 
+void lcd_init_cursor();
+
 void lcd_ledge_e(void);
 
 void lcd_set_cursor_position_1_left();

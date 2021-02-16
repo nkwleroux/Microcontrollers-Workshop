@@ -35,29 +35,24 @@ void lcd_switch_power();
 
 void init(){
 	
-		DDRC = 0xFF;
-		PORTC = 0x00;
-		
-		PORTC = 0x20;	// function set
-		lcd_ledge_e();
+	DDRC = 0xFF;
+	PORTC = 0x00;
+	
+	lcd_reset();
+	lcd_init_cursor();
 
-		PORTC = 0x20;   // function set
-		lcd_ledge_e();
-		
-		PORTC = 0x80;	//Sets cursor position.
-		lcd_ledge_e();
 
-		PORTC = 0x00;   //Display on/off control
-		lcd_ledge_e();
-		
-		PORTC = 0xF0;   //Turn on cursor
-		lcd_ledge_e();
+	PORTC = 0x00;   //Display on/off control
+	lcd_ledge_e();
+	
+	PORTC = 0xF0;   //Turn on cursor
+	lcd_ledge_e();
 
-		PORTC = 0x00;   // Entry mode set
-		lcd_ledge_e();
-		
-		PORTC = 0x60;
-		lcd_ledge_e();
+	PORTC = 0x00;   // Entry mode set
+	lcd_ledge_e();
+	
+	//PORTC = 0x60;
+	//lcd_ledge_e();
 	
 	//lcd_reset();
 	//lcd_clear_screen();
@@ -70,8 +65,14 @@ void init(){
 //used to reset the lcd - 4bit interface, 2 lines, 5*7 pixels
 void lcd_reset(){
 	for(int i = 0;i < 2; i++){
-		lcd_write_charCMD(0x38);
+		PORTC = 0x20;	// function set
+		lcd_ledge_e();
 	}
+}
+
+void lcd_init_cursor(){
+		PORTC = 0x80;	//Sets cursor position.
+		lcd_ledge_e();
 }
 
 void lcd_clear_screen(){
@@ -173,7 +174,6 @@ void lcd_set_cursor_position_1_right(){
 
 void lcd_return_home(){
 	lcd_write_charCMD(0x02); //used to return home
-	//lcd_write_charCMD(0x80);
 }
 
 void lcd_switch_power(){
