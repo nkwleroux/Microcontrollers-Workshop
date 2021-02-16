@@ -13,7 +13,6 @@
 int main(void)
 {
 	DDRD = 0xFF;
-	init();
 	test_hello_world();
     while (1) 
     {
