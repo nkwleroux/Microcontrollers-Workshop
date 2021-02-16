@@ -18,8 +18,6 @@ void wait( int ms );
 
 void init_hello_world();
 
-void lcd_init_cursor();
-
 void lcd_ledge_e(void);
 
 void lcd_set_cursor_position_1_left();
@@ -31,10 +29,6 @@ void lcd_return_home();
 void lcd_write_charCMD(char cmd);
 
 void lcd_write_char(char message);
-
-void lcd_write_line1(char text[]);
-
-void lcd_write_line2(char text[]);
 
 //used to reset the lcd - 4bit interface, 2 lines, 5*7 pixels
 void lcd_reset();

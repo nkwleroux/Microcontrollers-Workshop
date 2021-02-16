@@ -38,9 +38,14 @@ void init(){
 	DDRC = 0xFF;
 	PORTC = 0x00;
 	
-	lcd_reset();
-	lcd_init_cursor();
+	PORTC = 0x20;	// function set
+	lcd_ledge_e();
 
+	PORTC = 0x20;   // function set
+	lcd_ledge_e();
+	
+	PORTC = 0x80;	//Sets cursor position.
+	lcd_ledge_e();
 
 	PORTC = 0x00;   //Display on/off control
 	lcd_ledge_e();
@@ -51,8 +56,8 @@ void init(){
 	PORTC = 0x00;   // Entry mode set
 	lcd_ledge_e();
 	
-	//PORTC = 0x60;
-	//lcd_ledge_e();
+	PORTC = 0x60;
+	lcd_ledge_e();
 	
 	//lcd_reset();
 	//lcd_clear_screen();
@@ -62,29 +67,24 @@ void init(){
 
 //START init functions
 
-//used to reset the lcd - 4bit interface, 2 lines, 5*7 pixels
+//used to reset the lcd - 4bit interface, 2 lines, 5*7 pixels (doens't work)
 void lcd_reset(){
 	for(int i = 0;i < 2; i++){
-		PORTC = 0x20;	// function set
-		lcd_ledge_e();
+		lcd_write_charCMD(0x38);
 	}
 }
 
-void lcd_init_cursor(){
-		PORTC = 0x80;	//Sets cursor position.
-		lcd_ledge_e();
-}
-
+//(doens't work)
 void lcd_clear_screen(){
 	lcd_write_charCMD(0x01);
 }
 
-//lcd command 6 in hex
+//lcd command 6 in hex (doens't work)
 void lcd_set_cursor_left_to_right(){
 	lcd_write_charCMD(0x06);
 }
 
-//turns on visible blinking block
+//turns on visible blinking block (doens't work)
 void lcd_set_cursor_blinking_block(){
 	lcd_write_charCMD(0x0F);
 }
@@ -129,24 +129,6 @@ void lcd_write_char(char byte){
 	display(byte,1);
 }
 
-//not sure if needed
-void lcd_write_line1(char text[]){
-	lcd_write_charCMD(0x80); //row 1
-	for (int i = 0; i <16; i++)
-	{
-		lcd_write_char(text[i]);
-	}
-}
-
-//not sure if needed
-void lcd_write_line2(char text[]){
-	lcd_write_charCMD(0xC0); //row 2
-	for (int i = 0; i <16; i++)
-	{
-		lcd_write_char(text[i]);
-	}
-}
-
 //END methods for text.
 
 void display_text(char *str){
@@ -164,18 +146,22 @@ void set_cursor(int position){
 	}
 }
 
+//(doens't work)
 void lcd_set_cursor_position_1_left(){
 	lcd_write_charCMD(0x10);
 }
 
+//(doens't work)
 void lcd_set_cursor_position_1_right(){
 	lcd_write_charCMD(0x14);
 }
 
+//(doens't work)
 void lcd_return_home(){
 	lcd_write_charCMD(0x02); //used to return home
 }
 
+//(doens't work)
 void lcd_switch_power(){
 	lcd_write_charCMD(0x00);
 }
