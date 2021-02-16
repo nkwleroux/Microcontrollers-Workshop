@@ -47,6 +47,9 @@ void init(){
 
 		PORTC = 0x38;   // function set
 		lcd_ledge_e();
+		
+		PORTC = 0x80;
+		lcd_ledge_e();
 
 		PORTC = 0x00;   //Display on/off control
 		lcd_ledge_e();
