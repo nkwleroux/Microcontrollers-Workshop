@@ -34,19 +34,16 @@ void lcd_set_cursor_blinking_block();
 void lcd_switch_power();
 
 void init(){
-
-	DDRC = 0xFF;
-	PORTC = 0x00;
 	
 		DDRC = 0xFF;
 		PORTC = 0x00;
 
 		// Step 2 (table 12)
-		PORTC = 0x20;	// function set
+		PORTC = 0x28;	// function set
 		lcd_ledge_e();
 
 		// Step 3 (table 12)
-		PORTC = 0x20;   // function set
+		PORTC = 0x28;   // function set
 		lcd_ledge_e();
 		PORTC = 0x80;
 		lcd_ledge_e();
