@@ -92,6 +92,7 @@ void lcd_set_cursor_blinking_block(){
 
 void init_hello_world(){
 	init();
+	lcd_clear_screen();
 	set_cursor(0);
 	display_text("hello");
 	set_cursor(6);
