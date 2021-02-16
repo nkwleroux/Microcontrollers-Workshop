@@ -50,15 +50,15 @@ void init(){
 		PORTC = 0xF0;   //Turn on cursor
 		lcd_ledge_e();
 
-		//PORTC = 0x00;   // Entry mode set
-		//lcd_ledge_e();
-		
-		
-		PORTC = 0x06;   // Entry mode set
+		PORTC = 0x00;   // Entry mode set
 		lcd_ledge_e();
 		
-		//PORTC = 0x60;
+		
+		//PORTC = 0x06;   // Entry mode set
 		//lcd_ledge_e();
+		
+		PORTC = 0x60;
+		lcd_ledge_e();
 	
 	//lcd_reset();
 	//lcd_clear_screen();
