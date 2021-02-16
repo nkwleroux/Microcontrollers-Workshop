@@ -21,7 +21,7 @@ const unsigned char Numbers [16] = {
 	0b01111101, // 6
 	0b00000111, // 7
 	0b01111111, // 8
-	0b01101111, // 9
+	0b01100111, // 9
 	0b01110111,	// 10 (A)
 	0b01111100,	// 11 (B)
 	0b00111001,	// 12 (C)
@@ -37,11 +37,9 @@ void wait( int ms );
 int main(void)
 {
 	DDRC = 0b11111111;
-	//PORTC = 0b11111111;
-    /* Replace with your application code */
     while (1) 
     {
-		for (int i = 0; i < 17; i++)
+		for (int i = 0; i < 16; i++)
 		{
 			display(i);
 			
@@ -56,8 +54,7 @@ void display(int digit){
 	}else{
 		PORTC= 0b01101111;
 	}
-	wait(1000);
-	
+	wait(500);
 }
 
 void wait( int ms ) {
