@@ -44,11 +44,11 @@ int main(void)
 		//for (int i = 0; i < 17; i++)
 		//{
 			
-			if(PIND == 0b11){
+			if(PIND == 0x1FF){
 				i = 0;
-			}else if(PIND == 0bFF){
+			}else if(PIND == 0xFF){
 				i++;
-			}else if(PIND == 0b10){
+			}else if(PIND == 0x17F){
 				i--;
 			}
 			
@@ -59,7 +59,7 @@ int main(void)
 }
 
 void display(int digit){
-	if(digit <= 0 || digit >= 15){
+	if(digit < 0 || digit > 15){
 		PORTC = Numbers[16];
 	}else{
 		PORTC = Numbers[digit];
