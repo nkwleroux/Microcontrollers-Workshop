@@ -37,14 +37,11 @@ void init(){
 	
 		DDRC = 0xFF;
 		PORTC = 0x00;
-
-		// Step 2 (table 12)
 		
 		PORTC = 0x30;	// function set
 		//PORTC = 0x20;
 		lcd_ledge_e();
 
-		// Step 3 (table 12)
 		PORTC = 0x30;   // function set
 		//PORTC = 0x20;
 		lcd_ledge_e();
@@ -53,14 +50,12 @@ void init(){
 		//PORTC = 0x80;	//Sets cursor to top left.
 		lcd_ledge_e();
 
-		// Step 4 (table 12)
 		PORTC = 0x00;   //Display on/off control
 		lcd_ledge_e();
 		
 		PORTC = 0xF0;   //Turn on cursor
 		lcd_ledge_e();
 
-		// Step 4 (table 12)
 		PORTC = 0x00;   // Entry mode set
 		lcd_ledge_e();
 		
@@ -101,6 +96,7 @@ void lcd_set_cursor_blinking_block(){
 
 void init_hello_world(){
 	init();
+	set_cursor(0);
 	display_text("hello");
 	set_cursor(7);
 	display_text("world");
