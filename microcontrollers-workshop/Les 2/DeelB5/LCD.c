@@ -38,10 +38,35 @@ void init(){
 	DDRC = 0xFF;
 	PORTC = 0x00;
 	
-	lcd_reset();
-	lcd_clear_screen();
-	lcd_set_cursor_left_to_right();
-	lcd_set_cursor_blinking_block();
+		DDRC = 0xFF;
+		PORTC = 0x00;
+
+		// Step 2 (table 12)
+		PORTC = 0x20;	// function set
+		lcd_ledge_e();
+
+		// Step 3 (table 12)
+		PORTC = 0x20;   // function set
+		lcd_ledge_e();
+		PORTC = 0x80;
+		lcd_ledge_e();
+
+		// Step 4 (table 12)
+		PORTC = 0x00;   // Display on/off control
+		lcd_ledge_e();
+		PORTC = 0xF0;
+		lcd_ledge_e();
+
+		// Step 4 (table 12)
+		PORTC = 0x00;   // Entry mode set
+		lcd_ledge_e();
+		PORTC = 0x60;
+		lcd_ledge_e();
+	
+	//lcd_reset();
+	//lcd_clear_screen();
+	//lcd_set_cursor_left_to_right();
+	//lcd_set_cursor_blinking_block();
 }
 
 //START init functions
