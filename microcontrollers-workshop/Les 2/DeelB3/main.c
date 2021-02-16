@@ -11,7 +11,7 @@
 #include <util/delay.h>
 
 const unsigned char Numbers [16] = {
-	// dPgfe dcba
+	//Pgfedcba
 	0b00111111, // 0
 	0b00000110, // 1
 	0b01011011, // 2
@@ -39,20 +39,19 @@ int main(void)
 	DDRC = 0b11111111;
     while (1) 
     {
-		for (int i = 0; i < 16; i++)
-		{
-			display(i);
-			
-		}
+		//for (int i = 0; i < 16; i++)
+		//{
+			//display(i);
+			display(Numbers[10]);
+		//}
     }
 }
 
 void display(int digit){
 	if(0 <= digit || digit <= 15){
-		PORTC= Numbers[digit];
-		
+		PORTC = Numbers[digit];
 	}else{
-		PORTC= 0b01101111;
+		PORTC = 0b01101111;
 	}
 	wait(500);
 }
