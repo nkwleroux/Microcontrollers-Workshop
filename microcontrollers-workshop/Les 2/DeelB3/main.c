@@ -10,6 +10,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
+//Array of numbers in binary.
 const unsigned char Numbers [] = {
 	//Pgfedcba
 	0b00111111, // 0
@@ -41,9 +42,6 @@ int main(void)
     int i = 0; //counter
 	while (1) 
     {
-		//for (int i = 0; i < 17; i++)
-		//{
-			
 			if(PIND == 0b11){
 				i = 0;
 			}else if(PIND == 0b01){
@@ -54,10 +52,10 @@ int main(void)
 			
 			display(i);
 			wait(100);
-		//}
     }
 }
 
+//Displays the digit on the screen if the number is between 0 and 15.
 void display(int digit){
 	if(digit < 0 || digit > 15){
 		PORTC = Numbers[16];
