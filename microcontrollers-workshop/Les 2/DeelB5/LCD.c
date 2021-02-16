@@ -46,7 +46,7 @@ void init(){
 		PORTC = 0x20;   // function set
 		lcd_ledge_e();
 		
-		PORTC = 0x80;	//
+		PORTC = 0x80;	//Sets cursor to top left.
 		lcd_ledge_e();
 
 		// Step 4 (table 12)
@@ -59,6 +59,7 @@ void init(){
 		// Step 4 (table 12)
 		PORTC = 0x00;   // Entry mode set
 		lcd_ledge_e();
+		
 		PORTC = 0x60;
 		lcd_ledge_e();
 	
@@ -110,28 +111,42 @@ void lcd_ledge_e(void) {
 
 //START methods used to display text.
 
-void lcd_write_charCMD(char byte){
-		// First nibble.
-		PORTC = byte;
-		PORTC &= ~(1<<LCD_RS);
-		lcd_ledge_e();
+void display(char byte, int rs){
+	// First nibble.
+	PORTC = byte;
+	PORTC |= (rs<<2);
+	lcd_ledge_e();
 
-		// Second nibble
-		PORTC = (byte << 4);
-		PORTC &= ~(1<<LCD_RS);
-		lcd_ledge_e();
+	// Second nibble
+	PORTC = (byte << 4);
+	PORTC |= (rs<<2);
+	lcd_ledge_e();
+}
+
+void lcd_write_charCMD(char byte){
+// 		// First nibble.
+// 		PORTC = byte;
+// 		PORTC &= ~(1<<LCD_RS);
+// 		lcd_ledge_e();
+// 
+// 		// Second nibble
+// 		PORTC = (byte << 4);
+// 		PORTC &= ~(1<<LCD_RS);
+// 		lcd_ledge_e();
+	display(byte,0);
 }
 
 void lcd_write_char(char byte){
-		// First nibble.
-		PORTC = byte;
-		PORTC |= (1<<LCD_RS);
-		lcd_ledge_e();
-
-		// Second nibble
-		PORTC = (byte << 4);
-		PORTC |= (1<<LCD_RS);
-		lcd_ledge_e();
+// 		// First nibble.
+// 		PORTC = byte;
+// 		PORTC |= (1<<LCD_RS);
+// 		lcd_ledge_e();
+// 
+// 		// Second nibble
+// 		PORTC = (byte << 4);
+// 		PORTC |= (1<<LCD_RS);
+// 		lcd_ledge_e();
+	display(byte,1);
 }
 
 //not sure if needed
