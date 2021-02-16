@@ -44,11 +44,11 @@ int main(void)
 		//for (int i = 0; i < 17; i++)
 		//{
 			
-			if(PIND == 0x1FF){
+			if(PIND == 0b11){
 				i = 0;
-			}else if(PIND == 0xFF){
+			}else if(PIND == 0b01){
 				i++;
-			}else if(PIND == 0x17F){
+			}else if(PIND == 0b10){
 				i--;
 			}
 			
