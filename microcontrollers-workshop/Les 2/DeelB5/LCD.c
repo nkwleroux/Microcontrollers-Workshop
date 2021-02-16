@@ -49,7 +49,7 @@ void init(){
 //used to reset the lcd - 4bit interface, 2 lines, 5*7 pixels
 void lcd_reset(){
 	for(int i = 0;i < 3; i++){
-		lcd_write_charCMD(0x28);
+		lcd_write_charCMD(0x20);
 		wait(20);
 	}
 }
