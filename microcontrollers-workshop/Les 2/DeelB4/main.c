@@ -29,7 +29,7 @@ void wait( int ms );
 
 int main( void )
 {
-	DDRD = 0b11111111;	//Output port D
+	DDRC = 0b11111111;	//Output port C
 	
 	while (1) {
 		int index = 0;
