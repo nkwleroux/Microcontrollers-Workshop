@@ -12,12 +12,11 @@
 
 int main(void)
 {
-	DDRC = 0xFF;
-	PORTC = 0xFF;
+	DDRD = 0xFF;
 	init_hello_world();
     while (1) 
     {
-		PORTC ^= (1<<7);	// Toggle PORTD.7
+		PORTD ^= (1<<7);	// Toggle PORTD.7
 		_delay_ms( 250 );
 		
     }
