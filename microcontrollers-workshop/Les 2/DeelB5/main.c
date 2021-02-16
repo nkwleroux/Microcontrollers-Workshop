@@ -15,6 +15,9 @@ int main(void)
 {
     while (1) 
     {
+		DDRA = 0xFF;
+		PORTA = 0x01;
+		init();
     }
 }
 
