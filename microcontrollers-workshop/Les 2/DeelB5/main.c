@@ -13,10 +13,11 @@
 int main(void)
 {
 	DDRD = 0xFF;
-	test_hello_world();
+	init_hello_world();
     while (1) 
     {
-		
+		PORTD ^= (1<<7);	// Toggle PORTD.7
+		_delay_ms( 250 );
 		
     }
 }

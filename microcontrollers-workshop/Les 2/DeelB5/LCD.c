@@ -18,7 +18,7 @@ void init();
 void display_text(char *str);
 void set_cursor(int position);
 void wait( int ms );
-void test_hello_world();
+void init_hello_world();
 void lcd_ledge_e(void);
 void lcd_set_cursor_position_1_left();
 void lcd_set_cursor_position_1_right();
@@ -70,7 +70,7 @@ void lcd_set_cursor_blinking_block(){
 
 //END init functions
 
-void test_hello_world(){
+void init_hello_world(){
 	init();
 	display_text("hello");
 	set_cursor(10);

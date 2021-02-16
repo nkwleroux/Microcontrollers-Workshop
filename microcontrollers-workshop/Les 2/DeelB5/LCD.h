@@ -16,7 +16,7 @@ void set_cursor(int position);
 //Added
 void wait( int ms );
 
-void test_hello_world();
+void init_hello_world();
 
 void lcd_ledge_e(void);
 
