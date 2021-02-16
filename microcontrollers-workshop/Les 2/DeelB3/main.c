@@ -10,7 +10,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-const unsigned char Numbers [10][2] = {
+const unsigned char Numbers [16] = {
 	// dPgfe dcba
 	0b00111111, // 0
 	0b00000110, // 1
@@ -52,10 +52,11 @@ int main(void)
 void display(int digit){
 	if(0 <= digit || digit <= 15){
 		PORTC= Numbers[digit];
-		wait(100);
+		
 	}else{
-		PORTC= 0b01111011;
+		PORTC= 0b01101111;
 	}
+	wait(1000);
 	
 }
 
