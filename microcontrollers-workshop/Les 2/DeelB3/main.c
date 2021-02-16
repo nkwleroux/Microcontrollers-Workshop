@@ -36,13 +36,25 @@ void wait( int ms );
 
 int main(void)
 {
-	DDRC = 0b11111111;
-    while (1) 
+	DDRC = 0b11111111; //output port c
+	DDRD = 0x00; //input port D
+    int i = 0; //counter
+	while (1) 
     {
-		for (int i = 0; i < 17; i++)
-		{
+		//for (int i = 0; i < 17; i++)
+		//{
+			
+			if(PIND && 0b11){
+				i = 0;
+			}else if(PIND && 0b01){
+				i++;
+			}else if(PIND && 0b10){
+				i--;
+			}
+			
 			display(i);
-		}
+			wait(500);
+		//}
     }
 }
 
@@ -52,7 +64,6 @@ void display(int digit){
 	}else{
 		PORTC = Numbers[16];
 	}
-	wait(500);
 }
 
 void wait( int ms ) {
