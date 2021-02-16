@@ -37,7 +37,7 @@ int main( void )
 		
 		while(index < length){
 			
-			PORTD = value[index];
+			PORTC = value[index];
 			wait(delay[index]);
 			index++;
 		}
