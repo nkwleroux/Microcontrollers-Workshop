@@ -29,7 +29,7 @@ const unsigned char Numbers [] = {
 	0b01011110,	// 13 (D)
 	0b01111001,	// 14 (E)
 	0b01110001,	// 15 (F)
-	0b01110011, // 16 (e) e for Error. Can't use E since that represents 14.
+	0b01111011, // 16 (e) e for Error. Can't use E since that represents 14.
 };
 
 void display(int digit);
@@ -51,7 +51,7 @@ int main(void)
 			}
 			
 			display(i);
-			wait(100);
+			wait(200);
     }
 }
 
