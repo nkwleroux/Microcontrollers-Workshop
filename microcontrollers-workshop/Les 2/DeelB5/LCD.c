@@ -39,14 +39,18 @@ void init(){
 		PORTC = 0x00;
 
 		// Step 2 (table 12)
-		PORTC = 0x20;	// function set
+		
+		PORTC = 0x28;	// function set
+		//PORTC = 0x20;
 		lcd_ledge_e();
 
 		// Step 3 (table 12)
-		PORTC = 0x20;   // function set
+		PORTC = 0x28;   // function set
+		//PORTC = 0x20;
 		lcd_ledge_e();
 		
-		PORTC = 0x80;	//Sets cursor to top left.
+		PORTC = 0x02;
+		//PORTC = 0x80;	//Sets cursor to top left.
 		lcd_ledge_e();
 
 		// Step 4 (table 12)
@@ -98,7 +102,7 @@ void lcd_set_cursor_blinking_block(){
 void init_hello_world(){
 	init();
 	display_text("hello");
-	set_cursor(10);
+	set_cursor(6);
 	display_text("world");
 }
 
@@ -124,28 +128,10 @@ void display(char byte, int rs){
 }
 
 void lcd_write_charCMD(char byte){
-// 		// First nibble.
-// 		PORTC = byte;
-// 		PORTC &= ~(1<<LCD_RS);
-// 		lcd_ledge_e();
-// 
-// 		// Second nibble
-// 		PORTC = (byte << 4);
-// 		PORTC &= ~(1<<LCD_RS);
-// 		lcd_ledge_e();
 	display(byte,0);
 }
 
 void lcd_write_char(char byte){
-// 		// First nibble.
-// 		PORTC = byte;
-// 		PORTC |= (1<<LCD_RS);
-// 		lcd_ledge_e();
-// 
-// 		// Second nibble
-// 		PORTC = (byte << 4);
-// 		PORTC |= (1<<LCD_RS);
-// 		lcd_ledge_e();
 	display(byte,1);
 }
 
