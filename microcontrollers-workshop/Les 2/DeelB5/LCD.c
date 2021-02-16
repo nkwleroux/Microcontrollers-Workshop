@@ -40,12 +40,12 @@ void init(){
 
 		// Step 2 (table 12)
 		
-		PORTC = 0x28;	// function set
+		PORTC = 0x30;	// function set
 		//PORTC = 0x20;
 		lcd_ledge_e();
 
 		// Step 3 (table 12)
-		PORTC = 0x28;   // function set
+		PORTC = 0x30;   // function set
 		//PORTC = 0x20;
 		lcd_ledge_e();
 		
@@ -78,7 +78,7 @@ void init(){
 //used to reset the lcd - 4bit interface, 2 lines, 5*7 pixels
 void lcd_reset(){
 	for(int i = 0;i < 3; i++){
-		lcd_write_charCMD(0x20);
+		lcd_write_charCMD(0x28);
 		wait(20);
 	}
 }
@@ -102,7 +102,7 @@ void lcd_set_cursor_blinking_block(){
 void init_hello_world(){
 	init();
 	display_text("hello");
-	set_cursor(6);
+	set_cursor(7);
 	display_text("world");
 }
 
