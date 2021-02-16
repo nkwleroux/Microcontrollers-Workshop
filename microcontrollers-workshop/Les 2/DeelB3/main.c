@@ -10,7 +10,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-const unsigned char Numbers [16] = {
+const unsigned char Numbers [] = {
 	//Pgfedcba
 	0b00111111, // 0
 	0b00000110, // 1
@@ -28,7 +28,7 @@ const unsigned char Numbers [16] = {
 	0b01011110,	// 13 (D)
 	0b01111001,	// 14 (E)
 	0b01110001,	// 15 (F)
-			// 16 (G) Must not be displayed since its bigger than 15.
+	0b01110011, // 16 (e) e for Error. Can't use E since that represents 14.
 };
 
 void display(int digit);
@@ -39,11 +39,10 @@ int main(void)
 	DDRC = 0b11111111;
     while (1) 
     {
-		//for (int i = 0; i < 16; i++)
-		//{
-			//display(i);
-			display(Numbers[10]);
-		//}
+		for (int i = 0; i < 17; i++)
+		{
+			display(i);
+		}
     }
 }
 
@@ -51,7 +50,7 @@ void display(int digit){
 	if(0 <= digit || digit <= 15){
 		PORTC = Numbers[digit];
 	}else{
-		PORTC = 0b01101111;
+		PORTC = Numbers[16];
 	}
 	wait(500);
 }
