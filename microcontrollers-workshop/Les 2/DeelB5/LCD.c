@@ -38,17 +38,17 @@ void init(){
 		DDRC = 0xFF;
 		PORTC = 0x00;
 		
-		PORTC = 0x30;	// function set
+		PORTC = 0x38;	// function set
 		//PORTC = 0x20;
 		lcd_ledge_e();
 
-		PORTC = 0x30;   // function set
+		PORTC = 0x38;   // function set
 		//PORTC = 0x20;
 		lcd_ledge_e();
 		
-		PORTC = 0x02;
+		//PORTC = 0x02;
 		//PORTC = 0x80;	//Sets cursor to top left.
-		lcd_ledge_e();
+		//lcd_ledge_e();
 
 		PORTC = 0x00;   //Display on/off control
 		lcd_ledge_e();
