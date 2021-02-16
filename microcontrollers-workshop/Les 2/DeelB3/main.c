@@ -51,7 +51,7 @@ int main(void)
 			}
 			
 			display(i);
-			wait(100);
+			wait(200);
     }
 }
 
