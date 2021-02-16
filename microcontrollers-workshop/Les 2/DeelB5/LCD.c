@@ -38,6 +38,8 @@ void init(){
 		DDRC = 0xFF;
 		PORTC = 0x00;
 		
+		lcd_clear_screen();
+		
 		lcd_reset();
 		
 // 		PORTC = 0x38;	// function set
@@ -73,7 +75,7 @@ void init(){
 //used to reset the lcd - 4bit interface, 2 lines, 5*7 pixels
 void lcd_reset(){
 	for(int i = 0;i < 2; i++){
-		lcd_write_charCMD(0x28);
+		lcd_write_charCMD(0x38);
 		//wait(20);
 	}
 }
