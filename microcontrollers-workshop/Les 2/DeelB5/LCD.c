@@ -38,11 +38,13 @@ void init(){
 		DDRC = 0xFF;
 		PORTC = 0x00;
 		
-		PORTC = 0x38;	// function set
-		lcd_ledge_e();
-
-		PORTC = 0x38;   // function set
-		lcd_ledge_e();
+		lcd_reset();
+		
+// 		PORTC = 0x38;	// function set
+// 		lcd_ledge_e();
+// 
+// 		PORTC = 0x38;   // function set
+// 		lcd_ledge_e();
 
 		PORTC = 0x00;   //Display on/off control
 		lcd_ledge_e();
@@ -70,9 +72,9 @@ void init(){
 
 //used to reset the lcd - 4bit interface, 2 lines, 5*7 pixels
 void lcd_reset(){
-	for(int i = 0;i < 3; i++){
+	for(int i = 0;i < 2; i++){
 		lcd_write_charCMD(0x28);
-		wait(20);
+		//wait(20);
 	}
 }
 
@@ -96,7 +98,7 @@ void init_hello_world(){
 	init();
 	set_cursor(0);
 	display_text("hello");
-	set_cursor(7);
+	set_cursor(6);
 	display_text("world");
 }
 
