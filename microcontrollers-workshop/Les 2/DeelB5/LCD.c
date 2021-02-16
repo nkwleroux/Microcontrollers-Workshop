@@ -11,8 +11,8 @@
 #include <avr/interrupt.h>
 #include "LCD.h"
 
-#define LCD_E 3
-#define LCD_RS 2
+#define LCD_E 6
+#define LCD_RS 4
 
 void init();
 void display_text(char *str);
@@ -41,11 +41,11 @@ void init(){
 		PORTA = 0x00;
 
 		// Step 2 (table 12)
-		PORTC = 0x28;	// function set
+		PORTC = 0x20;	// function set
 		lcd_ledge_e();
 
 		// Step 3 (table 12)
-		PORTC = 0x28;   // function set
+		PORTC = 0x20;   // function set
 		lcd_ledge_e();
 		PORTC = 0x80;
 		lcd_ledge_e();
