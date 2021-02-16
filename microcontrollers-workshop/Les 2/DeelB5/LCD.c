@@ -36,7 +36,9 @@ void lcd_switch_power();
 void init(){
 	
 		DDRC = 0xFF;
+		DDRA = 0xFF;
 		PORTC = 0x00;
+		PORTA = 0x00;
 
 		// Step 2 (table 12)
 		PORTC = 0x28;	// function set
@@ -111,24 +113,24 @@ void lcd_ledge_e(void) {
 void lcd_write_charCMD(char byte){
 		// First nibble.
 		PORTC = byte;
-		PORTC &= ~(1<<LCD_RS);
+		PORTA &= ~(1<<LCD_RS);
 		lcd_ledge_e();
 
 		// Second nibble
 		PORTC = (byte << 4);
-		PORTC &= ~(1<<LCD_RS);
+		PORTA &= ~(1<<LCD_RS);
 		lcd_ledge_e();
 }
 
 void lcd_write_char(char byte){
 		// First nibble.
 		PORTC = byte;
-		PORTC |= (1<<LCD_RS);
+		PORTA |= (1<<LCD_RS);
 		lcd_ledge_e();
 
 		// Second nibble
 		PORTC = (byte << 4);
-		PORTC |= (1<<LCD_RS);
+		PORTA |= (1<<LCD_RS);
 		lcd_ledge_e();
 }
 
@@ -163,6 +165,7 @@ void set_cursor(int position){
 	lcd_return_home();
 	for (int i = 0; i < position; i++)
 	{
+		wait(2);
 		lcd_set_cursor_position_1_right();
 	}
 }
@@ -173,14 +176,15 @@ void lcd_set_cursor_position_1_left(){
 
 void lcd_set_cursor_position_1_right(){
 	lcd_write_charCMD(0x14);
-	wait(2);
+	//wait(2);
 }
 
 void lcd_return_home(){
 	//lcd_write_charCMD(0x02); //used to return home
-	PORTC = 0x02;
-	lcd_ledge_e();
-	wait(2);
+	lcd_write_charCMD(0x80);
+	//PORTC = 0x02;
+	//lcd_ledge_e();
+	//wait(2);
 }
 
 void lcd_switch_power(){
