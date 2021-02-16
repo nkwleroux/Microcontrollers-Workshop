@@ -11,8 +11,8 @@
 #include <avr/interrupt.h>
 #include "LCD.h"
 
-#define LCD_E 6
-#define LCD_RS 4
+#define LCD_E 3
+#define LCD_RS 2
 
 void init();
 void display_text(char *str);
