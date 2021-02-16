@@ -12,6 +12,7 @@
 #include "LCD.h"
 
 #define LCD_E 3
+#define LCD_RS 2
 
 void init();
 void display_text(char *str);
@@ -19,7 +20,6 @@ void set_cursor(int position);
 void wait( int ms );
 void test_hello_world();
 void lcd_ledge_e(void);
-void lcd_display(char byte, int rs);
 void lcd_set_cursor_position_1_left();
 void lcd_set_cursor_position_1_right();
 void lcd_return_home();
@@ -86,28 +86,28 @@ void lcd_ledge_e(void) {
 
 //START methods used to display text.
 
-void lcd_write_charCMD(char cmd){
-	lcd_display(cmd, 0);
+void lcd_write_charCMD(char byte){
+		// First nibble.
+		PORTC = byte;
+		PORTC &= ~(1<<LCD_RS);
+		lcd_ledge_e();
+
+		// Second nibble
+		PORTC = (byte << 4);
+		PORTC &= ~(1<<LCD_RS);
+		lcd_ledge_e();
 }
 
-void lcd_write_char(char message){
-	lcd_display(message, 1);
-}
+void lcd_write_char(char byte){
+		// First nibble.
+		PORTC = byte;
+		PORTC |= (1<<LCD_RS);
+		lcd_ledge_e();
 
-void lcd_display(char byte, int rs){
-	if(rs){
-		rs = 1;
-	}
-	
-	// First nibble.
-	PORTC = (byte & 0xF0);
-	PORTC |= (rs<<2);
-	lcd_ledge_e();
-
-	// Second nibble
-	PORTC = (byte & 0xF0) << 4;
-	PORTC |= (rs<<2);
-	lcd_ledge_e();
+		// Second nibble
+		PORTC = (byte << 4);
+		PORTC |= (1<<LCD_RS);
+		lcd_ledge_e();
 }
 
 //not sure if needed

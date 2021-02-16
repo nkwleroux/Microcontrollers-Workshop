@@ -20,8 +20,6 @@ void test_hello_world();
 
 void lcd_ledge_e(void);
 
-void lcd_display(char byte, int rs);
-
 void lcd_set_cursor_position_1_left();
 
 void lcd_set_cursor_position_1_right();
