@@ -38,17 +38,13 @@ void init(){
 		DDRC = 0xFF;
 		PORTC = 0x00;
 		
-		//lcd_clear_screen();
-		
-		//lcd_reset();
-		
-		PORTC = 0x38;	// function set
+		PORTC = 0x20;	// function set
 		lcd_ledge_e();
 
-		PORTC = 0x38;   // function set
+		PORTC = 0x20;   // function set
 		lcd_ledge_e();
 		
-		PORTC = 0x80;
+		PORTC = 0x80;	//Sets cursor position.
 		lcd_ledge_e();
 
 		PORTC = 0x00;   //Display on/off control
@@ -59,10 +55,6 @@ void init(){
 
 		PORTC = 0x00;   // Entry mode set
 		lcd_ledge_e();
-		
-		
-		//PORTC = 0x06;   // Entry mode set
-		//lcd_ledge_e();
 		
 		PORTC = 0x60;
 		lcd_ledge_e();
@@ -79,7 +71,6 @@ void init(){
 void lcd_reset(){
 	for(int i = 0;i < 2; i++){
 		lcd_write_charCMD(0x38);
-		//wait(20);
 	}
 }
 
