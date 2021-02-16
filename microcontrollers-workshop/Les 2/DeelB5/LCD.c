@@ -44,6 +44,32 @@ void init(){
 	lcd_set_cursor_blinking_block();
 }
 
+//START init functions
+
+//used to reset the lcd - 4bit interface, 2 lines, 5*7 pixels
+void lcd_reset(){
+	for(int i = 0;i < 3; i++){
+		lcd_write_charCMD(0x28);
+		wait(20);
+	}
+}
+
+void lcd_clear_screen(){
+	lcd_write_charCMD(0x01);
+}
+
+//lcd command 6 in hex
+void lcd_set_cursor_left_to_right(){
+	lcd_write_charCMD(0x06);
+}
+
+//turns on visible blinking block
+void lcd_set_cursor_blinking_block(){
+	lcd_write_charCMD(0x0F);
+}
+
+//END init functions
+
 void test_hello_world(){
 	init();
 	display_text("hello");
@@ -61,15 +87,17 @@ void lcd_ledge_e(void) {
 //START methods used to display text.
 
 void lcd_write_charCMD(char cmd){
-	lcd_display(cmd, 1);
+	lcd_display(cmd, 0);
 }
 
 void lcd_write_char(char message){
-	lcd_display(message, 0);
+	lcd_display(message, 1);
 }
 
 void lcd_display(char byte, int rs){
-	if(rs) rs = 1;
+	if(rs){
+		rs = 1;
+	}
 	
 	// First nibble.
 	PORTC = (byte & 0xF0);
@@ -119,48 +147,18 @@ void set_cursor(int position){
 
 void lcd_set_cursor_position_1_left(){
 	lcd_write_charCMD(0x10);
-	lcd_ledge_e();
 }
 
 void lcd_set_cursor_position_1_right(){
 	lcd_write_charCMD(0x14);
-	lcd_ledge_e();
 }
 
 void lcd_return_home(){
 	lcd_write_charCMD(0x02); //used to return home
-	lcd_ledge_e();
-}
-
-//used to reset the lcd - 4bit interface, 2 lines, 5*7 pixels
-void lcd_reset(){
-	for(int i = 0;i < 3; i++){
-		lcd_write_charCMD(0x28);
-		lcd_ledge_e();
-		wait(20);
-	}
-}
-
-void lcd_clear_screen(){
-	lcd_write_charCMD(0x01);	
-	lcd_ledge_e();
-}
-
-//lcd command 6 in hex
-void lcd_set_cursor_left_to_right(){
-	lcd_write_charCMD(0x06);
-	lcd_ledge_e();
-}
-
-//turns on visible blinking block
-void lcd_set_cursor_blinking_block(){
-	lcd_write_charCMD(0x0F);
-	lcd_ledge_e();
 }
 
 void lcd_switch_power(){
 	lcd_write_charCMD(0x00);
-	lcd_ledge_e();
 }
 
 void wait( int ms ) {
