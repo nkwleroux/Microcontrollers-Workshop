@@ -13,27 +13,15 @@
 
 int i = 3;
 
-ISR( INT0_vect ) {
-	//if(i< 8){
-	//i++;
-	//}
-	//PORTD |= (1<<i);
-}
-
-
 ISR( INT1_vect ) {
 	if(i< 8){
 		i++;
 	}
 	PORTD |= (1<<i);
-	//PORTD &= ~(1<<i);
-	//if(i > 3){
-	//	i--;
-	//}
+	
 }
 
 ISR( INT2_vect){
-//	PORTD &= ~(1<<0);
 	PORTD &= ~(1<<i);
 	if(i > 3){
 		i--;
