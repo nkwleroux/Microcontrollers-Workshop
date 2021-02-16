@@ -173,10 +173,14 @@ void lcd_set_cursor_position_1_left(){
 
 void lcd_set_cursor_position_1_right(){
 	lcd_write_charCMD(0x14);
+	wait(2);
 }
 
 void lcd_return_home(){
-	lcd_write_charCMD(0x02); //used to return home
+	//lcd_write_charCMD(0x02); //used to return home
+	PORTC = 0x02;
+	lcd_ledge_e();
+	wait(2);
 }
 
 void lcd_switch_power(){
