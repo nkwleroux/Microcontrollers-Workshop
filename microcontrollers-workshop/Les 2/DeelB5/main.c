@@ -2,7 +2,7 @@
  * DeelB5.c
  *
  * Created: 16/2/2021 12:27:04 PM
- * Author : Nic
+ * Author : Nic & Jorn
  */ 
 #define F_CPU 8e6
 
@@ -14,11 +14,12 @@ int main(void)
 {
 	DDRD = 0xFF;
 	init_hello_world();
+	int i = 0;
     while (1) 
     {
 		PORTD ^= (1<<7);	// Toggle PORTD.7
-		_delay_ms( 250 );
-		
+		wait( 250 );
+		i++;
     }
 }
 

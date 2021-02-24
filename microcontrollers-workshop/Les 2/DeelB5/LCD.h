@@ -2,7 +2,7 @@
  * LCD.h
  *
  * Created: 16/2/2021 12:29:17 PM
- *  Author: Nic
+ *  Author: Nic & Jorn
  */ 
 
 #ifndef LCD_H_

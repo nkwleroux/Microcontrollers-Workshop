@@ -2,7 +2,7 @@
  * LCD.c
  *
  * Created: 16/2/2021 12:29:09 PM
- *  Author: Nic
+ *  Author: Nic & Jorn
  */ 
 #define F_CPU 8e6
 

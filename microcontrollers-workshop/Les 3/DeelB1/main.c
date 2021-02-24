@@ -2,7 +2,7 @@
  * DeelB1.c
  *
  * Created: 24/2/2021 8:56:56 AM
- * Author : Nic
+ * Author : Nic & Jorn
  */ 
 
 #include <avr/io.h>
@@ -10,7 +10,7 @@
 
 int main(void)
 {
-    /* Replace with your application code */
+   //gebruikt code van week 2 deel b opdracht 5
     while (1) 
     {
     }
