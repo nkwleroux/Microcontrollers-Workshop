@@ -9,10 +9,12 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <util/delay.h>
+#include <stdio.h>
 
 #define LCD_E 3
 
-volatile int tenthValue = 0;
+volatile int tenthValue = 0; 
+volatile int timerPreset = -1;
 
 void lcd_ledge_e(void);
 void wait( int ms );
@@ -25,6 +27,8 @@ void lcd_write_char(char byte);
 void display_text(char *str);
 void set_cursor(int position);
 void lcd_set_cursor_position_1_right(void);
+void lcd_scroll_cursor(int position);
+void lcd_scroll_display_position_1_right(void);
 void lcd_return_home(void);
 
 ISR( TIMER2_COMP_vect );
@@ -43,43 +47,43 @@ void wait( int ms ) {
 }
 
 void init_timer(void){
-	OCR2 = 250;				// Compare value of counter 2
-	TIMSK |= 0x80;		// T2 compare match interrupt enable BIT(7) or 0x80 = 0b10000000 
+	TCNT2 = timerPreset;			// Compare value of counter 2
+	TIMSK |= 0b01000000;			// T2 compare match interrupt enable BIT(7) or 0x80 = 0b10000000 
 	sei();					// turn_on intr all
-	TCCR2 = 0b00011111;		// Initialize T2: timer, prescaler=32, compare output disconnected,CTC,RUN
+	TCCR2 = 0x07;		// Initialize T2: timer, prescaler=32, compare output disconnected,CTC,RUN
 }
 
 void init_LCD(void){
 	DDRC = 0xFF;
 	PORTC = 0x00;
 	
-	PORTC = 0x20;	// function set
+	PORTC = 0x20;	//Function set (sets to 4 bit mode)
 	lcd_ledge_e();
 
-	PORTC = 0x20;   // function set
+	//1 instruction - Function set (0010 1000)
+ 	PORTC = 0x20;   //high nibble (0010) DL = 0 (4 bits)
+	lcd_ledge_e();
+	PORTC = 0x80;	//low nibble (1000) N = 1 (2 lines)
 	lcd_ledge_e();
 	
-	PORTC = 0x80;	//Sets cursor position.
-	lcd_ledge_e();
-
+	//2 instruction
 	PORTC = 0x00;   //Display on/off control
 	lcd_ledge_e();
-	
 	PORTC = 0xF0;   //Turn on cursor
 	lcd_ledge_e();
 
-	PORTC = 0x00;   // Entry mode set
+	//3 instruction
+	PORTC = 0x00;   //Entry mode set
 	lcd_ledge_e();
-	
-	PORTC = 0x60;
+	PORTC = 0x60;	//Set CGRAM address to 32
 	lcd_ledge_e();
 	
 	lcd_clear_screen();
 }
 
-//doenst work clears cursor
 void lcd_clear_screen(void){
 	lcd_write_charCMD(0x01);
+	set_cursor(0);
 }
 
 void display(char byte, int rs){
@@ -114,39 +118,64 @@ void set_cursor(int position){
 	for (int i = 0; i < position; i++)
 	{
 		lcd_set_cursor_position_1_right();
+		wait(1);
 	}
+}
+
+void lcd_set_cursor_position_in_row_2(int postion){
+	int pos = 0xc0 + postion;
+	lcd_write_charCMD(pos);
 }
 
 void lcd_set_cursor_position_1_right(void){
 	lcd_write_charCMD(0x14);
 }
 
-void lcd_return_home(void){
-	lcd_write_charCMD(0x02); //used to return home
+
+void lcd_scroll_cursor(int position){
+	lcd_return_home();
+	for (int i = 0; i < position; i++)
+	{
+		lcd_scroll_display_position_1_right();
+		wait(1);
+	}
 }
 
-ISR( TIMER2_COMP_vect ) {
-	TCNT2 = 0; // Preset value
-	tenthValue++; // Increment counter
+void lcd_scroll_display_position_1_right(void){
+	lcd_write_charCMD(0x1E);
+}
+
+void lcd_return_home(void){
+	lcd_write_charCMD(0x02); //used to return home
+	wait(5);
+}
+
+ISR( TIMER2_OVF_vect  ) {
+	TCNT2 = timerPreset;			// Preset value
+	tenthValue++;		// Increment counter
+	
+	lcd_clear_screen();
+	
+	char str[10];
+	sprintf(str, "%d", tenthValue);
+	display_text(str);
+	wait(1);
+// 	lcd_set_cursor_position_in_row_2(0);
+// 	display_text(str);
 }
 
 int main(void)
 {
-	DDRD &= ~0x80;
+	init_LCD();
+	DDRD = 0x00;
 	DDRA = 0xff;
 	DDRB = 0xff;
-	init_LCD();
 	init_timer();
-		
-    /* Replace with your application code */
+
     while (1) 
     {
 		PORTA = TCNT2;
-		PORTB = 1 << tenthValue;
-		lcd_clear_screen();
-		set_cursor(0);
-		display_text("hello");
-		wait(10);
+		PORTB = tenthValue;
     }
 }
 
