@@ -44,7 +44,7 @@ int main(void)
     {
 		PORTB = ADCL;			// Show MSB/LSB (bit 10:0) of ADC
 		PORTA = ADCH;
-		wait(1);
+		wait(100);
     }
 }
 
