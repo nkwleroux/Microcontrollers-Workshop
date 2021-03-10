@@ -11,14 +11,14 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
+int msCounter = 0;
+int switch = 0;
+
 void wait( int ms ) {
 	for (int i=0; i<ms; i++) {
 		_delay_ms( 1 );		// library function (max 30 ms at 8MHz)
 	}
 }
-
-int msCounter = 0;
-int io = 0;
 
 void timer2Init(void){
 	OCR2 = 7;
@@ -27,8 +27,7 @@ void timer2Init(void){
 						// TCNT2 matches OCR2.
 						// WGM21 = 3;	
 	
-	TIMSK = TIMSK | 1<<OCIE2; //S
-	ets the output compare match interrupt to true (enables it)
+	TIMSK = TIMSK | 1<<OCIE2; //Sets the output compare match interrupt to true (enables it)
 	TCCR2 |= 1<<CS22 | 0<<CS21 | 1<<CS20; //Set prescaler to clk I/O 1024 (clock select)
 	TCNT2 = 0;	//Sets the value to 0;
 	sei();
@@ -38,31 +37,24 @@ ISR( TIMER2_COMP_vect )
 {
 	msCounter++;
 	
-	if (io && msCounter >= 25) {
+	if (switch && msCounter >= 25) {
 		PORTD = 1<<5;
 		msCounter = 0;
-		io = 0;
+		switch = 0;
 		
-	} else if (!io && msCounter >= 15) {
+	} else if (!switch && msCounter >= 15) {
 		PORTD = 0<<5;
 		msCounter = 0;
-		io = 1;
+		switch = 1;
 	}
 }
-
-
-
-
 
 int main(void)
 {
 	DDRD = 0xFF;
 	DDRA = 0xFF;
-	//DDRB = 0xFF;
-	
 	timer2Init();
 	
-    /* Replace with your application code */
     while (1) 
     {
 		PORTA = TCNT2;
