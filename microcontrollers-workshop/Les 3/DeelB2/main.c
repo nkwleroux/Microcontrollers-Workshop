@@ -160,8 +160,6 @@ ISR( TIMER2_OVF_vect  ) {
 	sprintf(str, "%d", tenthValue);
 	display_text(str);
 	wait(1);
-// 	lcd_set_cursor_position_in_row_2(0);
-// 	display_text(str);
 }
 
 int main(void)
