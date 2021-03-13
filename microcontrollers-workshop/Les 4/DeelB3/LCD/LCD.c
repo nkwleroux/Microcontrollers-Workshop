@@ -78,7 +78,7 @@ void lcd_write_command(unsigned char byte) {
 }
 
 void lcd_clear() {
-	lcd_write_command (0x01); 
+	lcd_write_command(0x01); 
 	wait(2);
 	set_cursor(0);
 }

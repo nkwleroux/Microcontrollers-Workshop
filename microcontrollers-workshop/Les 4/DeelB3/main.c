@@ -14,7 +14,7 @@ void init_adc(void){
 							// (5)		1 = ADLAR - left adjust result
 							// (4-0)	00001 = MUX4:0 (ADC 1) 
 	
-	ADCSRA = 0b11100110;	// (7)		1 = ADEN (Enables ADC)
+	ADCSRA = 0b10000110;	// (7)		1 = ADEN (Enables ADC)
 							// (6)		0 = ADSC (Single conversion mode false)
 							// (5)		0 = ADFR (ADC in free running mode false)
 							// (4)		0 = ADIF (ADIF interrupt disabled)
