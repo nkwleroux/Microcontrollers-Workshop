@@ -28,7 +28,7 @@ int main(void)
 	init_lcd();
 	DDRF = 0x00; //input
 	DDRA = 0xFF;
-	DDRB = 0xFF; //output
+	DDRD = 0xFF; //output
 	init_adc();
 
     while (1) 
@@ -39,7 +39,7 @@ int main(void)
 			lcd_clear();
 			set_cursor(0);
 		}
-		PORTB = ADCL;
+		PORTD = ADCL;
 		PORTA = ADCH; //8 bits.
 		int i = ADCH + ADCL; // 10 bits
 		double temp = i / 4;
