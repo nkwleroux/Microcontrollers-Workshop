@@ -68,13 +68,13 @@ char spi_writeRead( unsigned char data )
 	return data;							// Return received byte
 }
 
-// Select device on pinnumer PORTB
+// Select device on pinnumber PORTB
 void spi_slaveSelect(unsigned char chipNumber)
 {
 	PORTB &= ~BIT(chipNumber);
 }
 
-// Deselect device on pinnumer PORTB
+// Deselect device on pinnumber PORTB
 void spi_slaveDeSelect(unsigned char chipNumber)
 {
 	PORTB |= BIT(chipNumber);
@@ -125,26 +125,26 @@ void displayOff()
 
 int main()
 {
-	// inilialize
+	// initialize
 	DDRB=0x01;					  	// Set PB0 pin as output for display select
 	spi_masterInit();              	// Initialize spi module
 	displayDriverInit();            // Initialize display chip
 
  	// clear display (all zero's)
-	for (char i =1; i<=4; i++)
+	for (char i =1; i<=3; i++)
 	{
       	spi_slaveSelect(0); 		// Select display chip
-      	spi_write(i);  				// 	digit adress: (digit place)
+      	spi_write(i);  				// 	digit address: (digit place)
       	spi_write(0);				// 	digit value: 0 
   	  	spi_slaveDeSelect(0);		// Deselect display chip
 	}    
 	wait(1000);
 
 	// write 4-digit data  
- 	for (char i =1; i<=4; i++)
+ 	for (char i =1; i<=3; i++)
   	{
 		spi_slaveSelect(0);         // Select display chip
-		spi_write(i);         		// 	digit adress: (digit place)
+		spi_write(i);         		// 	digit address: (digit place)
 		spi_write(i);  				// 	digit value: i (= digit place)
 		spi_slaveDeSelect(0); 		// Deselect display chip
 	
