@@ -91,12 +91,12 @@ void displayDriverInit()
 
   	spi_slaveSelect(0);				// Select display chip
   	spi_write(0x0A);      			// Register 0A: Intensity
-  	spi_write(0x04);    			//  -> Level 4 (in range [1..F])
+  	spi_write(0x08);    			//  -> Level 4 (in range [1..F])
   	spi_slaveDeSelect(0);			// Deselect display chip
 
   	spi_slaveSelect(0);				// Select display chip
   	spi_write(0x0B);  				// Register 0B: Scan-limit
-  	spi_write(0x03);   				// 	-> 1 = Display digits 0..4
+  	spi_write(0x03);   				// 	-> 1 = Display digits 0..4 //4 digits from 0 to 4 on 7 segment
   	spi_slaveDeSelect(0);			// Deselect display chip
 
   	spi_slaveSelect(0);				// Select display chip
