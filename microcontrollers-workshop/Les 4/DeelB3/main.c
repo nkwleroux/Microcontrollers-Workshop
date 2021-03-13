@@ -41,7 +41,7 @@ int main(void)
 		wait(100);
 		PORTD = ADCH; //8 bits.
 		char str[12];
-		sprintf(str, "%d", ADCH<<1);
+		sprintf(str, "%d", ADCH);
 		display_text(str);
 		wait(500);
 		lcd_clear();
