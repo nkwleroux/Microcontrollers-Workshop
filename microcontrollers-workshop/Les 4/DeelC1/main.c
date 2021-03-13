@@ -96,7 +96,7 @@ void displayDriverInit()
 
   	spi_slaveSelect(0);				// Select display chip
   	spi_write(0x0B);  				// Register 0B: Scan-limit
-  	spi_write(0x04);   				// 	-> 1 = Display digits 0..4
+  	spi_write(0x03);   				// 	-> 1 = Display digits 0..4
   	spi_slaveDeSelect(0);			// Deselect display chip
 
   	spi_slaveSelect(0);				// Select display chip
