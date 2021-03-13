@@ -163,12 +163,12 @@ int main()
 // 		//wait(1000);
 //   	}
 	// write 4-digit data  
- 	for (char i =1; i<=4; i++)
-  	{
-		spi_writeWord(i,i);
-	
-		//wait(1000);
-  	}
+//  	for (char i =1; i<=4; i++)
+//   	{
+// 		spi_writeWord(i,i);
+// 	
+// 		//wait(1000);
+//   	}
 	wait(1000);
 }
 
