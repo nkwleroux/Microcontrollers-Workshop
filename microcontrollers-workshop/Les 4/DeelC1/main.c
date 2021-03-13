@@ -128,18 +128,15 @@ void spi_writeWord ( unsigned char address, unsigned char data ){	spi_slaveSele
 	spi_write(data); 				// Data
 	spi_slaveDeSelect(0);			// Deselect display chip}
 void writeLedDisplay( int value ){
-// 	if(value < 10){
-// 		spi_writeWord(1,value); //1 digit
-// 		//1 0
-// 		//digit 1 = 1
-// 		//digit 2 = 0
-// 	}if else(value < 100){
-// 		spi_writeWord()
-// 	}if else(value < 1000){
-// 		
-// 	}if else(value < 10000){
-// 		
-// 	}
+	if (value < 10000){
+	int i;
+		while (value>0){
+			int mod = value % 10;
+			value /= 10;
+			i++;
+			spi_writeWord(i,mod);
+		}
+	}
 }
 
 int main()
@@ -161,7 +158,7 @@ int main()
 //   	{
 // 		spi_writeWord(i,i);
 //   	}
-		spi_writeWord(1,10);
+		writeLedDisplay(30);
 	wait(1000);
 }
 
