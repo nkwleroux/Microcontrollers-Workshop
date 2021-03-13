@@ -51,7 +51,7 @@ int main(void)
 		set_cursor(40);
 		//temperature
 		char strTemp[50];
-		sprintf(strTemp, "Temperature: % .13f", temp);
+		sprintf(strTemp, "Temperature: %2.13f", temp);
 		//memcpy(strTemp,&temp,sizeof(temp));
 		display_text(strTemp);
 		wait(500);
