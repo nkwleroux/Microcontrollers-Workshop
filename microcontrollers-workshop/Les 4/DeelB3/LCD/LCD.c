@@ -44,6 +44,8 @@ void init_lcd( void ) {
 	
 	lcd_clear();
 	set_cursor(0);
+	
+	wait(10);
 }
 
 void lcd_strobe_lcd_e(void) {

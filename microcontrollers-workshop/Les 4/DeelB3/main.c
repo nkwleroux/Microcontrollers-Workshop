@@ -10,7 +10,7 @@
 #include "LCD/LCD.h"
 
 void init_adc(void){
-	ADMUX = 0b11100011;		// (7,6)	11 = REFS1:0 (2.56v)
+	ADMUX = 0b11100001;		// (7,6)	11 = REFS1:0 (2.56v)
 							// (5)		1 = ADLAR - left adjust result
 							// (4-0)	00001 = MUX4:0 (ADC 1) 
 	
@@ -20,21 +20,16 @@ void init_adc(void){
 							// (4)		0 = ADIF (ADIF interrupt disabled)
 							// (3)		0 = ADIE (ADC conversion complete interrupt disabled)
 							// (2-0)	110 = ADPS2:0 (64)
+	wait(10);
 }
 
 int main(void)
 {
 	init_lcd();
-	wait(10);
 	DDRF = 0x00; //input
 	DDRD = 0xFF; //output
 	init_adc();
-	wait(10);
-	
-// 	display_text("test");
-// 	wait(5000);
-// 	lcd_clear();
-	
+
     while (1) 
     {
 		ADCSRA |= 1 << 6;				
