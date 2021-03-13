@@ -25,14 +25,19 @@ void init_adc(void){
 int main(void)
 {
 	init_lcd();
-	DDRF = 0x00;
-	DDRD = 0xff;
+	DDRF = 0x00; //input
+	DDRD = 0xff; //output
 	init_adc();
+	
+	display_text("test");
+	wait(2000);
+	lcd_clear();
 	
     while (1) 
     {
+		
 		ADCSRA |= 1 << 6;				
-		while ( ADCSRA & 1 << 6) ;		
+		while ( ADCSRA & 1 << 6);		
 		PORTD = ADCH; //8 bits.
 		char str[10];
 		sprintf(str, "%d", ADCH);
