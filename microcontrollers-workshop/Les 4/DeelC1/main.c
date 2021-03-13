@@ -123,6 +123,11 @@ void displayOff()
   	spi_slaveDeSelect(0);			// Deselect display chip
 }
 
+void spi_writeWord ( unsigned char address, unsigned char data ){	spi_slaveSelect(0);				// Select display chip
+	spi_write(address); 			// Register/address
+	spi_write(data); 				// Data
+	spi_slaveDeSelect(0);}
+
 int main()
 {
 	// initialize
@@ -131,24 +136,38 @@ int main()
 	displayDriverInit();            // Initialize display chip
 
  	// clear display (all zero's)
+// 	for (char i =1; i<=4; i++)
+// 	{
+//       	spi_slaveSelect(0); 		// Select display chip
+//       	spi_write(i);  				// 	digit address: (digit place)
+//       	spi_write(0);				// 	digit value: 0 
+//   	  	spi_slaveDeSelect(0);		// Deselect display chip
+// 	}    
+// 	wait(1000);
+	
+	// clear display (all zero's)
 	for (char i =1; i<=4; i++)
 	{
-      	spi_slaveSelect(0); 		// Select display chip
-      	spi_write(i);  				// 	digit address: (digit place)
-      	spi_write(0);				// 	digit value: 0 
-  	  	spi_slaveDeSelect(0);		// Deselect display chip
+		spi_writeWord(i,0);
 	}    
 	wait(1000);
 
 	// write 4-digit data  
+//  	for (char i =1; i<=4; i++)
+//   	{
+// 		spi_slaveSelect(0);         // Select display chip
+// 		spi_write(i);         		// 	digit address: (digit place)
+// 		spi_write(i);  				// 	digit value: i (= digit place)
+// 		spi_slaveDeSelect(0); 		// Deselect display chip
+// 	
+// 		//wait(1000);
+//   	}
+	// write 4-digit data  
  	for (char i =1; i<=4; i++)
   	{
-		spi_slaveSelect(0);         // Select display chip
-		spi_write(i);         		// 	digit address: (digit place)
-		spi_write(i);  				// 	digit value: i (= digit place)
-		spi_slaveDeSelect(0); 		// Deselect display chip
+		spi_writeWord(i,i);
 	
-		wait(1000);
+		//wait(1000);
   	}
 	wait(1000);
 }
