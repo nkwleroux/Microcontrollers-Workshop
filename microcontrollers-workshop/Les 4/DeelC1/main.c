@@ -133,7 +133,7 @@ int main()
 	displayDriverInit();            // Initialize display chip
 
  	// clear display (all zero's)
-	for (char i =1; i<=2; i++)
+	for (char i =1; i<=4; i++)
 	{
       	spi_slaveSelect(0); 		// Select display chip
       	spi_write(i);  				// 	digit adress: (digit place)
