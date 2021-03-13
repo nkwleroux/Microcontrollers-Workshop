@@ -43,7 +43,7 @@ int main(void)
 		PORTD = ADCL;
 		PORTA = ADCH; //8 bits.
 		int i = ADCH + ADCL; // 10 bits
-		double temp = i / 4;
+		int temp = i / 4;
 		//combined total
 		char strI[30];
 		sprintf(strI, "Total bits: %d", i);
@@ -51,7 +51,7 @@ int main(void)
 		set_cursor(40);
 		//temperature
 		char strTemp[50];
-		sprintf(strTemp, "Temperature: %2.13f", temp);
+		sprintf(strTemp, "Temperature: %d", temp);
 		//memcpy(strTemp,&temp,sizeof(temp));
 		display_text(strTemp);
 		wait(500);
