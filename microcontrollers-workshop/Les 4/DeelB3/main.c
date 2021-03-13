@@ -34,7 +34,11 @@ int main(void)
     while (1) 
     {
 		ADCSRA |= 0x40; //1 << 6			
-		while(ADCSRA & 0x40)
+		while(ADCSRA & 0x40){		
+			display_text("Loading");
+			lcd_clear();
+			set_cursor(0);
+		}
 		PORTB = ADCL;
 		PORTA = ADCH; //8 bits.
 		int i = ADCH + ADCL; 
