@@ -51,7 +51,6 @@ void spi_masterInit(void)
 											// Mode = 0: CPOL=0, CPPH=0;
 }
 
-
 // Write a byte from master to slave
 void spi_write( unsigned char data )				
 {
@@ -78,7 +77,6 @@ void spi_slaveSelect(unsigned char chipNumber)
 // Deselect device on pinnumer PORTB
 void spi_slaveDeSelect(unsigned char chipNumber)
 {
-
 	PORTB |= BIT(chipNumber);
 }
 
@@ -91,14 +89,14 @@ void displayDriverInit()
   	spi_write(0xFF);				// 	-> 1's = BCD mode for all digits
   	spi_slaveDeSelect(0);			// Deselect display chip
 
-  	spi_slaveSelect(0);				// Select dispaly chip
+  	spi_slaveSelect(0);				// Select display chip
   	spi_write(0x0A);      			// Register 0A: Intensity
   	spi_write(0x04);    			//  -> Level 4 (in range [1..F])
   	spi_slaveDeSelect(0);			// Deselect display chip
 
   	spi_slaveSelect(0);				// Select display chip
   	spi_write(0x0B);  				// Register 0B: Scan-limit
-  	spi_write(0x01);   				// 	-> 1 = Display digits 0..1
+  	spi_write(0x04);   				// 	-> 1 = Display digits 0..4
   	spi_slaveDeSelect(0);			// Deselect display chip
 
   	spi_slaveSelect(0);				// Select display chip
