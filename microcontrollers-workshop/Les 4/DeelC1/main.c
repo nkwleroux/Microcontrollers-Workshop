@@ -143,11 +143,11 @@ int main()
 	wait(1000);
 
 	// write 4-digit data  
- 	for (char i =1; i<=2; i++)
+ 	for (char i =1; i<=4; i++)
   	{
 		spi_slaveSelect(0);         // Select display chip
 		spi_write(i);         		// 	digit adress: (digit place)
-		spi_write(i);  		// 	digit value: i (= digit place)
+		spi_write(i);  				// 	digit value: i (= digit place)
 		spi_slaveDeSelect(0); 		// Deselect display chip
 	
 		wait(1000);
