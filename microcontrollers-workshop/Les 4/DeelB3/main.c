@@ -4,10 +4,11 @@
  * Created: 13/3/2021 11:28:09 AM
  * Author : Nic & Jorn
  */ 
-
 #include <avr/io.h>
 #include <stdio.h>
 #include "LCD/LCD.h"
+
+#define F_CPU 8e6
 
 void init_adc(void){
 	ADMUX = 0b11100001;		// (7,6)	11 = REFS1:0 (2.56v)
@@ -42,15 +43,16 @@ int main(void)
 		PORTD = ADCL;
 		PORTA = ADCH; //8 bits.
 		int i = ADCH + ADCL; // 10 bits
-		double temp = i / 4;
+		float temp = i / 4;
 		//combined total
-		char strI[12];
+		char strI[30];
 		sprintf(strI, "Total bits: %d", i);
 		display_text(strI);
 		set_cursor(40);
 		//temperature
-		char strTemp[12];
-		sprintf(strTemp, "Temperature: %d", temp);
+		char strTemp[40];
+		sprintf(strTemp, "Temperature: %f", temp);
+		memcpy(strTemp,&temp,sizeof(40));
 		display_text(strTemp);
 		wait(500);
 		lcd_clear();

@@ -22,6 +22,8 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
+#define F_CPU 8e6
+
 #define BIT(x)		( 1<<x )
 #define DDR_SPI		DDRB					// spi Data direction register
 #define PORT_SPI	PORTB					// spi Output register
