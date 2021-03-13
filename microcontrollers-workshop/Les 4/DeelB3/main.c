@@ -37,7 +37,7 @@ int main(void)
 	
     while (1) 
     {
-		ADCSRA |= 1 << 6;				
+		ADCSRA ^= 1 << 6;				
 		wait(100);
 		PORTD = ADCH; //8 bits.
 		char str[10];
