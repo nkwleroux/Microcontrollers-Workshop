@@ -6,6 +6,7 @@
  */ 
 #include <avr/io.h>
 #include <stdio.h>
+#include <string.h>
 #include "LCD/LCD.h"
 
 #define F_CPU 8e6
@@ -43,16 +44,16 @@ int main(void)
 		PORTD = ADCL;
 		PORTA = ADCH; //8 bits.
 		int i = ADCH + ADCL; // 10 bits
-		float temp = i / 4;
+		double temp = i / 4;
 		//combined total
 		char strI[30];
 		sprintf(strI, "Total bits: %d", i);
 		display_text(strI);
 		set_cursor(40);
 		//temperature
-		char strTemp[40];
-		sprintf(strTemp, "Temperature: %f", temp);
-		//memcpy(strTemp,&temp,sizeof(40));
+		char strTemp[sizeof(temp)];
+		//sprintf(strTemp, "Temperature: %f", temp);
+		memcpy(strTemp,&temp,sizeof(temp));
 		display_text(strTemp);
 		wait(500);
 		lcd_clear();
