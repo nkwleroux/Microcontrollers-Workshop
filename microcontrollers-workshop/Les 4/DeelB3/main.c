@@ -37,14 +37,15 @@ int main(void)
 	
     while (1) 
     {
-		
 		ADCSRA |= 1 << 6;				
-		while ( ADCSRA & 1 << 6);		
+		wait(100);
 		PORTD = ADCH; //8 bits.
 		char str[10];
 		sprintf(str, "%d", ADCH);
 		display_text(str);
 		wait(500);
+		lcd_clear();
+		set_cursor(0);
     }
 }
 
