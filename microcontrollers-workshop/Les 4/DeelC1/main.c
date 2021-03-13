@@ -18,11 +18,10 @@
      SW:              AVR-GCC
  * NOTES			: Turn ON switch 15, PB1/PB2/PB3 to MISO/MOSI/SCK
 */
+#define F_CPU 8e6
 
 #include <avr/io.h>
 #include <util/delay.h>
-
-#define F_CPU 8e6
 
 #define BIT(x)		( 1<<x )
 #define DDR_SPI		DDRB					// spi Data direction register
