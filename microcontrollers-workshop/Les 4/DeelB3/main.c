@@ -32,8 +32,8 @@ int main(void)
 	wait(10);
 	
 	display_text("test");
-	wait(2000);
-	//lcd_clear();
+	wait(5000);
+	lcd_clear();
 	
     while (1) 
     {
@@ -41,9 +41,9 @@ int main(void)
 		ADCSRA |= 1 << 6;				
 		while ( ADCSRA & 1 << 6);		
 		PORTD = ADCH; //8 bits.
-		//char str[10];
-	//	sprintf(str, "%d", ADCH);
-//		display_text(str);
+		char str[10];
+		sprintf(str, "%d", ADCH);
+		display_text(str);
 		wait(500);
     }
 }
