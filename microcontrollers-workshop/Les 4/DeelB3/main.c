@@ -15,7 +15,7 @@ void init_adc(void){
 							// (4-0)	00001 = MUX4:0 (ADC 1) 
 	
 	ADCSRA = 0b10000110;	// (7)		1 = ADEN (Enables ADC)
-							// (6)		1 = ADSC (Single conversion mode false)
+							// (6)		0 = ADSC (Single conversion mode false)
 							// (5)		0 = ADFR (ADC in free running mode false)
 							// (4)		0 = ADIF (ADIF interrupt disabled)
 							// (3)		0 = ADIE (ADC conversion complete interrupt disabled)
@@ -41,21 +41,17 @@ int main(void)
 		}
 		PORTB = ADCL;
 		PORTA = ADCH; //8 bits.
-		int i = ADCH + ADCL; 
-		//first 8 bits
-		char strADCH[12];
-		sprintf(strADCH, "%d", ADCH);
-		display_text(strADCH);
-		set_cursor(10);
-		//last 2 bits
-		char strADCL[12];
-		sprintf(strADCL, "%d", ADCL);
-		display_text(strADCL);
-		set_cursor(40);
+		int i = ADCH + ADCL; // 10 bits
+		double temp = i / 4;
 		//combined total
 		char strI[12];
-		sprintf(strI, "%d", i);
+		sprintf(strI, "Total bits: %d", i);
 		display_text(strI);
+		set_cursor(40);
+		//temperature
+		char strTemp[12];
+		sprintf(strTemp, "Temperature: %d", temp);
+		display_text(strTemp);
 		wait(500);
 		lcd_clear();
 		set_cursor(0);
