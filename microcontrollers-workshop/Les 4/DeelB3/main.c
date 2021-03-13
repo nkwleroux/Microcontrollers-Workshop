@@ -27,17 +27,31 @@ int main(void)
 {
 	init_lcd();
 	DDRF = 0x00; //input
-	DDRD = 0xFF; //output
+	DDRA = 0xFF;
+	DDRB = 0xFF; //output
 	init_adc();
 
     while (1) 
     {
-		ADCSRA |= 1 << 6;				
-		wait(100);
-		PORTD = ADCH; //8 bits.
-		char str[12];
-		sprintf(str, "%d", ADCH);
-		display_text(str);
+		ADCSRA |= 0x40; //1 << 6			
+		while(ADCSRA & 0x40)
+		PORTB = ADCL;
+		PORTA = ADCH; //8 bits.
+		int i = ADCH + ADCL; 
+		//first 8 bits
+		char strADCH[12];
+		sprintf(strADCH, "%d", ADCH);
+		display_text(strADCH);
+		set_cursor(10);
+		//last 2 bits
+		char strADCL[12];
+		sprintf(strADCL, "%d", ADCL);
+		display_text(strADCL);
+		set_cursor(40);
+		//combined total
+		char strI[12];
+		sprintf(strI, "%d", i);
+		display_text(strI);
 		wait(500);
 		lcd_clear();
 		set_cursor(0);
