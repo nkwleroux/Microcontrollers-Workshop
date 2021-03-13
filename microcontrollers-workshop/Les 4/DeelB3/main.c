@@ -6,7 +6,6 @@
  */ 
 #include <avr/io.h>
 #include <stdio.h>
-#include <string.h>
 #include "LCD/LCD.h"
 
 #define F_CPU 8e6
@@ -51,9 +50,9 @@ int main(void)
 		display_text(strI);
 		set_cursor(40);
 		//temperature
-		char strTemp[sizeof(temp)];
-		//sprintf(strTemp, "Temperature: %f", temp);
-		memcpy(strTemp,&temp,sizeof(temp));
+		char strTemp[50];
+		sprintf(strTemp, "Temperature: %f", temp);
+		//memcpy(strTemp,&temp,sizeof(temp));
 		display_text(strTemp);
 		wait(500);
 		lcd_clear();
