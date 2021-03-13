@@ -131,7 +131,7 @@ int main()
 	displayDriverInit();            // Initialize display chip
 
  	// clear display (all zero's)
-	for (char i =1; i<=3; i++)
+	for (char i =1; i<=4; i++)
 	{
       	spi_slaveSelect(0); 		// Select display chip
       	spi_write(i);  				// 	digit address: (digit place)
@@ -141,7 +141,7 @@ int main()
 	wait(1000);
 
 	// write 4-digit data  
- 	for (char i =1; i<=3; i++)
+ 	for (char i =1; i<=4; i++)
   	{
 		spi_slaveSelect(0);         // Select display chip
 		spi_write(i);         		// 	digit address: (digit place)
