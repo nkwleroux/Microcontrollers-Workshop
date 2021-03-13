@@ -25,9 +25,11 @@ void init_adc(void){
 int main(void)
 {
 	init_lcd();
+	wait(10);
 	DDRF = 0x00; //input
 	DDRD = 0xff; //output
 	init_adc();
+	wait(10);
 	
 	display_text("test");
 	wait(2000);

@@ -8,8 +8,7 @@
 #ifndef LCD_H_
 #define LCD_H_
 
-#define LCD_E 	6
-#define LCD_RS	4  
+#define LCD_E 	3
 
 void wait( int ms );
 void init_lcd( void );

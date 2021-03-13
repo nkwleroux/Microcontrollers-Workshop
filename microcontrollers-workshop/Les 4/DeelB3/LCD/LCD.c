@@ -20,9 +20,7 @@ void wait( int ms ) {
 
 void init_lcd( void ) {
 	DDRC = 0xFF;
-	DDRA = 0xFF;
 	PORTC = 0x00;
-	PORTA = 0x00;
 
 	PORTC = 0x20;
 	lcd_strobe_lcd_e();
@@ -49,40 +47,40 @@ void init_lcd( void ) {
 }
 
 void lcd_strobe_lcd_e(void) {
-	PORTA |= (1<<LCD_E);	// E high
-	_delay_ms(1);
-	PORTA &= ~(1<<LCD_E);  	// E low
-	_delay_ms(1);
+	PORTC |= (1<<LCD_E);	// E high
+	wait(1);
+	PORTC &= ~(1<<LCD_E);  	// E low
+	wait(1);
 }
 
 void lcd_write_data(unsigned char byte ) {
 	// First nibble.
 	PORTC = byte;
-	PORTA |= (1<<LCD_RS);
+	PORTC |= (1<<2);
 	lcd_strobe_lcd_e();
 
 	// Second nibble
-	PORTC = (byte<<4);
-	PORTA |= (1<<LCD_RS);
+	PORTC = (byte << 4);
+	PORTC |= (1<<2);
 	lcd_strobe_lcd_e();
 }
 
 void lcd_write_command(unsigned char byte) {
 	// First nibble.
 	PORTC = byte;
-	PORTA &= ~(1<<LCD_RS);
+	PORTC |= (0<<2);
 	lcd_strobe_lcd_e();
 
 	// Second nibble
-	PORTC = (byte<<4);
-	PORTA &= ~(1<<LCD_RS);
+	PORTC = (byte << 4);
+	PORTC |= (0<<2);
 	lcd_strobe_lcd_e();
 }
 
 void lcd_clear() {
 	lcd_write_command (0x01); 
-	_delay_ms(2);
-	lcd_write_command (0x80); 
+	wait(2);
+	set_cursor(0);
 }
 
 void display_text(char *str) {
