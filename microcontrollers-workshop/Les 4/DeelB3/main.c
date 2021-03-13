@@ -15,7 +15,7 @@ void init_adc(void){
 							// (4-0)	00001 = MUX4:0 (ADC 1) 
 	
 	ADCSRA = 0b11000110;	// (7)		1 = ADEN (Enables ADC)
-							// (6)		0 = ADSC (Single conversion mode false)
+							// (6)		1 = ADSC (Single conversion mode true)
 							// (5)		0 = ADFR (ADC in free running mode false)
 							// (4)		0 = ADIF (ADIF interrupt disabled)
 							// (3)		0 = ADIE (ADC conversion complete interrupt disabled)
@@ -37,7 +37,7 @@ int main(void)
 	
     while (1) 
     {
-		ADCSRA ^= 1 << 6;				
+		ADCSRA |= 1 << 6;				
 		wait(100);
 		PORTD = ADCH; //8 bits.
 		char str[12];
