@@ -52,7 +52,7 @@ int main(void)
 		//temperature
 		char strTemp[40];
 		sprintf(strTemp, "Temperature: %f", temp);
-		memcpy(strTemp,&temp,sizeof(40));
+		//memcpy(strTemp,&temp,sizeof(40));
 		display_text(strTemp);
 		wait(500);
 		lcd_clear();
