@@ -31,9 +31,9 @@ int main(void)
 	init_adc();
 	wait(10);
 	
-	display_text("test");
-	wait(5000);
-	lcd_clear();
+// 	display_text("test");
+// 	wait(5000);
+// 	lcd_clear();
 	
     while (1) 
     {
