@@ -10,7 +10,7 @@
 #include "LCD/LCD.h"
 
 void init_adc(void){
-	ADMUX = 0b01100011;		// (7,6)	11 = REFS1:0 (??)
+	ADMUX = 0b11100011;		// (7,6)	11 = REFS1:0 (2.56v)
 							// (5)		1 = ADLAR - left adjust result
 							// (4-0)	00001 = MUX4:0 (ADC 1) 
 	
