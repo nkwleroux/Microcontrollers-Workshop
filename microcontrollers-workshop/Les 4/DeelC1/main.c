@@ -22,6 +22,7 @@
 
 #include <avr/io.h>
 #include <util/delay.h>
+#include <string.h>
 
 #define BIT(x)		( 1<<x )
 #define DDR_SPI		DDRB					// spi Data direction register
@@ -146,11 +147,15 @@ int main()
 	spi_masterInit();              	// Initialize spi module
 	displayDriverInit();            // Initialize display chip
 	unsigned char word[]= "help";
+	unsigned char output[9];
+	for(int i = 0;i < 6; ++i) {
+		output[i] = (unsigned char) strtol (&word[i],NULL, 16);
+	}
 	
 	// clear display (all zero's)
 	for (char i =1; i<=4; i++)
 	{
-		spi_writeWord(i,word[i]);
+		spi_writeWord(i,output[i]);
 	}    
 	wait(1000);
 
