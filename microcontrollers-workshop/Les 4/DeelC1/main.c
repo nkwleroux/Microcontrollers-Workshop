@@ -129,7 +129,7 @@ void spi_writeWord ( unsigned char address, unsigned char data ){	spi_slaveSele
 	spi_slaveDeSelect(0);			// Deselect display chip}
 void writeLedDisplay( int value ){
 	if (value < 10000){
-	int i;
+	int i = 0;
 		while (value>0){
 			int mod = value % 10;
 			value /= 10;
@@ -145,7 +145,7 @@ int main()
 	DDRB=0x01;					  	// Set PB0 pin as output for display select
 	spi_masterInit();              	// Initialize spi module
 	displayDriverInit();            // Initialize display chip
-	char word[4]= {"h","e","l","p"};
+	unsigned char word[]= "help";
 	
 	// clear display (all zero's)
 	for (char i =1; i<=4; i++)
@@ -154,8 +154,8 @@ int main()
 	}    
 	wait(1000);
 
-	writeLedDisplay(30);
-	wait(1000);
+	//writeLedDisplay(30);
+	//wait(1000);
 }
 
 
