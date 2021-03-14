@@ -52,7 +52,6 @@ int main(void)
 		//temperature
 		char strTemp[50];
 		sprintf(strTemp, "Temperature: %d", temp);
-		//memcpy(strTemp,&temp,sizeof(temp));
 		display_text(strTemp);
 		wait(500);
 		lcd_clear();

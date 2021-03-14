@@ -18,11 +18,11 @@
      SW:              AVR-GCC
  * NOTES			: Turn ON switch 15, PB1/PB2/PB3 to MISO/MOSI/SCK
 */
+#define F_CPU 8e6
 
 #include <avr/io.h>
 #include <util/delay.h>
-
-#define F_CPU 8e6
+#include <string.h>
 
 #define BIT(x)		( 1<<x )
 #define DDR_SPI		DDRB					// spi Data direction register
@@ -52,7 +52,6 @@ void spi_masterInit(void)
 											// Mode = 0: CPOL=0, CPPH=0;
 }
 
-
 // Write a byte from master to slave
 void spi_write( unsigned char data )				
 {
@@ -70,16 +69,15 @@ char spi_writeRead( unsigned char data )
 	return data;							// Return received byte
 }
 
-// Select device on pinnumer PORTB
+// Select device on pinnumber PORTB
 void spi_slaveSelect(unsigned char chipNumber)
 {
 	PORTB &= ~BIT(chipNumber);
 }
 
-// Deselect device on pinnumer PORTB
+// Deselect device on pinnumber PORTB
 void spi_slaveDeSelect(unsigned char chipNumber)
 {
-
 	PORTB |= BIT(chipNumber);
 }
 
@@ -92,14 +90,14 @@ void displayDriverInit()
   	spi_write(0xFF);				// 	-> 1's = BCD mode for all digits
   	spi_slaveDeSelect(0);			// Deselect display chip
 
-  	spi_slaveSelect(0);				// Select dispaly chip
+  	spi_slaveSelect(0);				// Select display chip
   	spi_write(0x0A);      			// Register 0A: Intensity
   	spi_write(0x04);    			//  -> Level 4 (in range [1..F])
   	spi_slaveDeSelect(0);			// Deselect display chip
 
   	spi_slaveSelect(0);				// Select display chip
   	spi_write(0x0B);  				// Register 0B: Scan-limit
-  	spi_write(0x01);   				// 	-> 1 = Display digits 0..1
+  	spi_write(0x03);   				// 	-> 1 = Display digits 0..4 //4 digits from 0 to 4 on 7 segment
   	spi_slaveDeSelect(0);			// Deselect display chip
 
   	spi_slaveSelect(0);				// Select display chip
@@ -126,34 +124,47 @@ void displayOff()
   	spi_slaveDeSelect(0);			// Deselect display chip
 }
 
+void spi_writeWord ( unsigned char address, unsigned char data ){	spi_slaveSelect(0);				// Select display chip
+	spi_write(address); 			// Register/address
+	spi_write(data); 				// Data
+	spi_slaveDeSelect(0);			// Deselect display chip}
+void writeLedDisplay( int value ){
+	if (value < 10000){
+		int i = 0;
+		if (value > -1000 && value < 0){
+			value = value * -1;
+			spi_writeWord(4,42);
+		}
+		while (value>0){
+			int mod = value % 10;
+			value /= 10;
+			i++;
+			spi_writeWord(i,mod);
+		}
+	}
+}
+
 int main()
 {
-	// inilialize
+	// initialize
 	DDRB=0x01;					  	// Set PB0 pin as output for display select
 	spi_masterInit();              	// Initialize spi module
 	displayDriverInit();            // Initialize display chip
-
- 	// clear display (all zero's)
-	for (char i =1; i<=2; i++)
+	//unsigned char word[]= "help";
+	//unsigned char output[9];
+	//for(int i = 0;i < 6; ++i) {
+		//output[i] = (unsigned char) strtol (&word[i],NULL, 16);
+	//}
+	
+	// clear display (all zero's)
+	for (char i =1; i<=4; i++)
 	{
-      	spi_slaveSelect(0); 		// Select display chip
-      	spi_write(i);  				// 	digit adress: (digit place)
-      	spi_write(0);				// 	digit value: 0 
-  	  	spi_slaveDeSelect(0);		// Deselect display chip
+		spi_writeWord(i,0);
 	}    
 	wait(1000);
 
-	// write 4-digit data  
- 	for (char i =1; i<=2; i++)
-  	{
-		spi_slaveSelect(0);         // Select display chip
-		spi_write(i);         		// 	digit adress: (digit place)
-		spi_write(i);  		// 	digit value: i (= digit place)
-		spi_slaveDeSelect(0); 		// Deselect display chip
-	
-		wait(1000);
-  	}
-	wait(1000);
+	writeLedDisplay(9999);
+	//wait(1000);
 }
 
 
