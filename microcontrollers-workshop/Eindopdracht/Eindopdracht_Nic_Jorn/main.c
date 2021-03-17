@@ -58,7 +58,6 @@ int main(void)
 		PORTF = 0x01; //sends a high signal
 		wait_us(50); //duration of the pulse in microseconds(us)
 		PORTF = 0x00; //sends a low signal
-		wait(100);
 		
 		while(PORTF != 0x02 ){
 			lcd_clear();
