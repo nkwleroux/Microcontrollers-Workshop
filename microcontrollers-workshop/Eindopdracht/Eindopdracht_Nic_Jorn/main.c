@@ -90,7 +90,7 @@ int main(void)
 	wait(100);
 	timer1Init();
 	wait(100);
-	timer1Init();
+	timer0Init();
 	 
 	DDRF = 0x01;
 	DDRA = 0x03;
@@ -113,7 +113,7 @@ int main(void)
 		
 // 		lcd_clear();
 // 		dtostrf(TCNT0, 2, 2, string);/* distance to string */
-// 		strcat(string, " timer0   ");	/* Concat unit i.e.cm */
+// 		strcat(string, " timer0");	/* Concat unit i.e.cm */
 // 		display_text(string);
 		
 /*		calculate_distance();*/
