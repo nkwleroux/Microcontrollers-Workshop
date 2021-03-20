@@ -9,20 +9,22 @@
 
 #include <avr/io.h>
 #include "LCD/LCD.h"
+#include "DeleteAfterUse/TestBuzzer.h"
 #include <util/delay.h>
 #include <avr/interrupt.h>
 #include <string.h>
 #include <stdlib.h>
+#include <math.h>
 #include <stdio.h>
 
 #define TRIG 1
 #define ECHO 0
 
-void wait_us(int ms) {
-	for (int i=0; i<ms; i++) {
-		_delay_us( 1 );		// library function (max 30 ms at 8MHz)
-	}
-}
+// void wait_us(int ms) {
+// 	for (int i=0; i<ms; i++) {
+// 		_delay_us( 1 );		// library function (max 30 ms at 8MHz)
+// 	}
+//
 
 //todo	Change TCCR1A to external clock source on falling edge. 
 //		Maybe add another time for rising edge and compare the length to get the difference.
@@ -115,6 +117,7 @@ int main(void)
 {
  	init_lcd();
 	wait(100);
+	
 /*	timer1Init();*/
 /*	wait(100);*/
 /*	timer0Init();*/
@@ -123,20 +126,29 @@ int main(void)
 	//DDRF = 0x01;
 	//DDRA = 0xFF;
 	
-	unsigned int distance;
-	
-	DDRF = (1 << TRIG); // TRIG ? ??
-	DDRF &= ~(1 << ECHO); // ECHO? ??
+	//DeleteAfterUse init
+	timer1_init();
+	PORTG = 0x00;
+	DDRG = 0x10;
+	EIMSK = 0x00;
+	TIMSK = 0x14; 
+	ETIMSK = 0X00;
 	sei();
 	 
     while (1) 
     {
+		//start code for sensor
 		
 		//PORTF = 0x01; //sends a high signal
 		//wait_us(50); //duration of the pulse in microseconds(us)
 		//PORTF = 0x00; //sends a low signal
 		
+		/*		calculate_distance();*/
+		
+		//end code for sensor
+		
 		//start code for buzzer
+		
 // 		PORTA = 0x03;
 // 		wait(20);
 // 		PORTA = 0x00;
@@ -151,27 +163,12 @@ int main(void)
 
 		//end code for buzzer
 		
-/*		calculate_distance();*/
+		
+		
+		SoundNotice();
 
-		TCCR1B = 0x03;
-		PORTF &= ~(1<<TRIG); 
-		wait_us(10); 
-		PORTF |= (1<<TRIG); 
-		wait_us(10); 
-		PORTF &= ~(1<<TRIG); 
-		while(!(PINF & (1<<ECHO))); 
-		TCNT1 = 0x0000; 
-		while(PINF & (1<<ECHO)); 
-		TCCR1B = 0x00; 
-		distance = (unsigned int)(340UL * (TCNT1 * 4 / 2) / 1000); 
 
-		lcd_clear();
-		dtostrf(distance, 2, 2, string);/* distance to string */
-		strcat(string, " cm   ");	/* Concat unit i.e.cm */
-		display_text(string);
-
-		wait(200);
-		//wait(1000); //duration of the time in between the pulses in miliseconds(ms)
+		wait(1000); //duration of the time in between the pulses in miliseconds(ms)
 		
     }
 }
