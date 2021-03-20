@@ -15,13 +15,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void wait_us( int ms ) {
+void wait_us(int ms) {
 	for (int i=0; i<ms; i++) {
 		_delay_us( 1 );		// library function (max 30 ms at 8MHz)
 	}
 }
 
-void timer1Init( void ) {
+void timer1Init(void) {
 	OCR1A = 31500; // 16-bits compare value of counter 1
 	TIMSK |= 1 << 4; // T1 compare match A interrupt enable
 	sei(); // turn_on intr all
@@ -35,6 +35,31 @@ ISR( TIMER1_COMPA_vect ) {
 	sCount++;
 }
 
+void calculate_distance(void){
+// 		while(PORTF != 0x02 ){
+// 			lcd_clear();
+// 				char str[10];
+// 				sprintf(str, "%d", sCount);
+// 				display_text(str);
+// 				wait(1);
+// 		}
+//
+// 		startTime = sCount;
+// 		sCount = 0;
+//
+// 		while(PORF != 0x00);
+// 		stopTime = sCount;
+// 		sCount = 0;
+//
+// 		timeDiffT = stopTime - startTime;
+// 		rangeCm = timeDiffT / 58;
+
+// 		lcd_clear();
+// 		dtostrf(rangeCm, 2, 2, string);/* distance to string */
+// 		strcat(string, " cm   ");	/* Concat unit i.e.cm */
+// 		display_text(string);
+}
+
 int main(void)
 {
  	init_lcd();
@@ -42,15 +67,16 @@ int main(void)
 	timer1Init();
 	 
 	DDRF = 0x01;
+	DDRA = 0xFF;
 	
-	display_text("init test");
-	set_cursor(40);
-	display_text("& wait 1 sec");
-	wait(1000); //1 sec
+// 	display_text("init test");
+// 	set_cursor(40);
+// 	display_text("& wait 1 sec");
+// 	wait(1000); //1 sec
 	
-	char string[10];
-	int startTime,stopTime,timeDiffT;
-	float rangeCm;
+// 	char string[10];
+// 	int startTime,stopTime,timeDiffT;
+// 	float rangeCm;
 	 
     while (1) 
     {
@@ -59,28 +85,13 @@ int main(void)
 		wait_us(50); //duration of the pulse in microseconds(us)
 		PORTF = 0x00; //sends a low signal
 		
-		while(PORTF != 0x02 ){
-			lcd_clear();
-				char str[10];
-				sprintf(str, "%d", sCount);
-				display_text(str);
-				wait(1);
-		}
+		PORTA = 0x01;
+		wait(20);
+		PORTA = 0x00;
 		
-		startTime = sCount;
-		sCount = 0;
-		
-		while(PORF != 0x00);
-		stopTime = sCount;
-		sCount = 0;
-		
-		timeDiffT = stopTime - startTime;
-		rangeCm = timeDiffT / 58;
-		
-// 		lcd_clear();
-// 		dtostrf(rangeCm, 2, 2, string);/* distance to string */
-// 		strcat(string, " cm   ");	/* Concat unit i.e.cm */
-// 		display_text(string);
+/*		calculate_distance();*/
+
+
 		wait(1000); //duration of the time in between the pulses in miliseconds(ms)
 		
     }
