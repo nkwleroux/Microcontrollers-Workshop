@@ -93,7 +93,7 @@ int main(void)
 	timer0Init();
 	 
 	DDRF = 0x01;
-	DDRA = 0x03;
+	DDRA = 0xFF;
 	
 // 	display_text("init test");
 // 	set_cursor(40);
