@@ -66,7 +66,6 @@ extern void SoundNotice(void);
 
 // private function
 ISR(TIMER1_OVF_vect);
-static void wait_us(int time_us);
 static void wait_ms(int timer_ms);
 static void sound(int freq);
 static void nosound(void);

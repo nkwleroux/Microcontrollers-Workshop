@@ -128,8 +128,8 @@ int main(void)
 	
 	//DeleteAfterUse init
 	timer1_init();
-	PORTF = 0x00;
-	DDRF = 0x10;
+	PORTA = 0x00;
+	DDRA = 0x10;
 	EIMSK = 0x00;
 	TIMSK = 0x14; 
 	ETIMSK = 0X00;

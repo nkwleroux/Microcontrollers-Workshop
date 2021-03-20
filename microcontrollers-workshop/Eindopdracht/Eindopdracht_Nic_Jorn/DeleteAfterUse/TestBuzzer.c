@@ -4,6 +4,7 @@
  * Created: 20/3/2021 1:28:50 PM
  *  Author: Nic
  */ 
+#define F_CPU 8e6
 
 #include "TestBuzzer.h"
 
@@ -13,29 +14,23 @@ ISR(TIMER1_OVF_vect) { //TIMER1 has overflowed
 	TCNT1H = T1HIGHCNT;
 	TCNT1L = T1LOWCNT;
 	if(Soundonoff == ON){
-		PORTF = PORTF ^ 0x10;
+		PORTA = PORTA ^ 0x10;
 	}
 }
 
-static void wait_us(int time_us){
-	for(int i=0; i<time_us; i++){
-		wait_us(1);
-	}
-}
-
-static void wait_ms(int timer_ms){
+void wait_ms(int timer_ms){
 	for(int i=0; i<timer_ms; i++){
-		wait_ms(1);
+		_delay_ms(1);
 	}
 }
 
 ///////////////////////////////////////////////////////////
-static void sound(int freq){
+void sound(int freq){
 	Soundonoff = ON;
 	T1HIGHCNT = (0xFFFF-floor(1000000/freq)) / 0x100;
 	T1LOWCNT = 0xFFFF-floor(1000000/freq) - 0xFF00;
 }
-static void nosound(void){
+void nosound(void){
 	Soundonoff = OFF;
 	wait_ms(100);
 }
