@@ -66,8 +66,8 @@ extern void SoundNotice(void);
 
 // private function
 ISR(TIMER1_OVF_vect);
-static void wait_ms(int timer_ms);
-static void sound(int freq);
-static void nosound(void);
+void wait_ms(int timer_ms);
+void sound(int freq);
+void nosound(void);
 
 #endif /* TESTBUZZER_H_ */
