@@ -99,6 +99,8 @@ int main(void)
 // 	set_cursor(40);
 // 	display_text("& wait 1 sec");
 // 	wait(1000); //1 sec
+
+int i = 0;
 	 
     while (1) 
     {
@@ -110,13 +112,17 @@ int main(void)
 		PORTA = 0x03;
 		wait(20);
 		PORTA = 0x00;
-		
-		for (int i = 0; i < 8; i++)
-		{
-			PORTA = 1 << i;
-			wait(500);
-			//PORTA = 0x00;
+		i++;
+		if(i > 8){
+			i = 0;
 		}
+		
+		//for (int i = 0; i < 8; i++)
+		//{
+			PORTA = 1 << i;
+			wait(50);
+			//PORTA = 0x00;
+		//}
 		
 // 		lcd_clear();
 // 		dtostrf(TCNT0, 2, 2, string);/* distance to string */
@@ -126,7 +132,7 @@ int main(void)
 /*		calculate_distance();*/
 
 
-		wait(1000); //duration of the time in between the pulses in miliseconds(ms)
+		//wait(1000); //duration of the time in between the pulses in miliseconds(ms)
 		
     }
 }
