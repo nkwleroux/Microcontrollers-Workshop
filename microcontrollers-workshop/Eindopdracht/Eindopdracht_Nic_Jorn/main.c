@@ -93,7 +93,7 @@ int main(void)
 	timer1Init();
 	 
 	DDRF = 0x01;
-	DDRA = 0x01;
+	DDRA = 0x03;
 	
 // 	display_text("init test");
 // 	set_cursor(40);
@@ -107,14 +107,14 @@ int main(void)
 		wait_us(50); //duration of the pulse in microseconds(us)
 		PORTF = 0x00; //sends a low signal
 		
-		PORTA = 0x01;
+		PORTA = 0x03;
 		wait(20);
 		PORTA = 0x00;
 		
-		lcd_clear();
-		dtostrf(TCNT0, 2, 2, string);/* distance to string */
-		strcat(string, " timer0   ");	/* Concat unit i.e.cm */
-		display_text(string);
+// 		lcd_clear();
+// 		dtostrf(TCNT0, 2, 2, string);/* distance to string */
+// 		strcat(string, " timer0   ");	/* Concat unit i.e.cm */
+// 		display_text(string);
 		
 /*		calculate_distance();*/
 
