@@ -128,8 +128,8 @@ int main(void)
 	
 	//DeleteAfterUse init
 	timer1_init();
-	PORTG = 0x00;
-	DDRG = 0x10;
+	PORTF = 0x00;
+	DDRF = 0x10;
 	EIMSK = 0x00;
 	TIMSK = 0x14; 
 	ETIMSK = 0X00;
@@ -162,8 +162,6 @@ int main(void)
 // 		display_text(string);
 
 		//end code for buzzer
-		
-		
 		
 		SoundNotice();
 

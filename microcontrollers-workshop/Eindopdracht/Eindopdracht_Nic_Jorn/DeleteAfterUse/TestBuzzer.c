@@ -17,33 +17,14 @@ ISR(TIMER1_OVF_vect) { //TIMER1 has overflowed
 	}
 }
 
-// static void delay_us(unsigned int time_us){
-// 	register unsigned int i;
-// 	for(i=0; i<time_us; i++){
-// 		asm volatile(" PUSH R0 ");
-// 		asm volatile(" POP R0 ");
-// 		asm volatile(" PUSH R0 ");
-// 		asm volatile(" POP R0 ");
-// 		asm volatile(" PUSH R0 ");
-// 		asm volatile(" POP R0 ");
-// 	}
-// }
-
-static void wait_us(unsigned int time_us){
-	for(unsigned int i=0; i<time_us; i++){
+static void wait_us(int time_us){
+	for(int i=0; i<time_us; i++){
 		wait_us(1);
 	}
 }
 
-// static void delay_ms(unsigned int timer_ms){
-// 	unsigned int i;
-// 	for(i=0; i<timer_ms; i++){
-// 		delay_us(1000);
-// 	}
-// }
-
-static void wait_ms(unsigned int timer_ms){
-	for(unsigned int i=0; i<timer_ms; i++){
+static void wait_ms(int timer_ms){
+	for(int i=0; i<timer_ms; i++){
 		wait_ms(1);
 	}
 }
