@@ -1,12 +1,18 @@
 /*
- * TestBuzzer.c
+ * Buzzer.c
  *
  * Created: 20/3/2021 1:28:50 PM
  *  Author: Nic
  */ 
 #define F_CPU 8e6
 
-#include "TestBuzzer.h"
+#include <avr/io.h>
+#include <avr/interrupt.h>
+#include <stdio.h>
+#include <util/delay.h>
+#include <math.h>
+#include "Buzzer.h"
+#include "Delay/Delay.h"
 
 ISR(TIMER1_OVF_vect) {
 	TCNT1H = T1HIGHCNT;
@@ -16,24 +22,18 @@ ISR(TIMER1_OVF_vect) {
 	}
 }
 
-void wait_ms(int timer_ms){
-	for(int i=0; i<timer_ms; i++){
-		_delay_ms(1);
-	}
+void init_Buzzer(void){
+	//Buzzer init
+	timer1_init();
+	PORTA = 0x00;
+	DDRA = 0x10;
+	EIMSK = 0x00;
+	TIMSK = 0x14;
+	ETIMSK = 0X00;
+	sei();
 }
 
-void sound(int freq){
-	Soundonoff = ON;
-	T1HIGHCNT = (0xFFFF-floor(1000000/freq)) / 0x100;
-	T1LOWCNT = 0xFFFF-floor(1000000/freq) - 0xFF00;
-}
-
-void nosound(void){
-	Soundonoff = OFF;
-	wait_ms(100);
-}
-
-extern void timer1_init(void) {
+void timer1_init(void) {
 	TCCR1B = 0x00;
 	
 	TCNT1H = T1HIGHCNT;
@@ -55,19 +55,24 @@ extern void timer1_init(void) {
 	TCCR1B = 0x02;
 }
 
-extern void soundNote(int tone, int dly){
+void sound(int freq){
+	Soundonoff = ON;
+	T1HIGHCNT = (0xFFFF-floor(1000000/freq)) / 0x100;
+	T1LOWCNT = 0xFFFF-floor(1000000/freq) - 0xFF00;
+}
+
+void nosound(void){
+	Soundonoff = OFF;
+	wait_ms(100);
+}
+
+void soundNote(int tone, int dly){
 	sound(tone);
 	wait_ms(dly*2);
 	nosound();
 }
 
-extern void SoundNotice(void){
-	soundNote(C1,DLY_16);
-	soundNote(D1,DLY_16);
-	soundNote(G1,DLY_16);
-}
-
-extern void pong(void){
+void test_sounds(void){
 	soundNote(C1,DLY_4);
 	soundNote(D1,DLY_4);
 	soundNote(E1,DLY_4);

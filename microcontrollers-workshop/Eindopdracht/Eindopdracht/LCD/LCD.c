@@ -10,8 +10,13 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
-#include "LCD.h"
-#include "Delay/Delay.h"
+#include "Include/LCD.h"
+
+static void wait_ms(int ms) {
+	for (int i=0; i<ms; i++) {
+		_delay_ms( 1 );		// library function (max 30 ms at 8MHz)
+	}
+}
 
 void init_lcd( void ) {
 	DDRC = 0xFF;
@@ -76,7 +81,7 @@ void lcd_write_command(unsigned char byte) {
 
 void lcd_clear() {
 	lcd_write_command(0x01); 
-	wait(2);
+	wait_ms(2);
 	set_cursor(0);
 }
 
