@@ -15,6 +15,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#define TRIG 1
+#define ECHO 0
+
 void wait_us(int ms) {
 	for (int i=0; i<ms; i++) {
 		_delay_us( 1 );		// library function (max 30 ms at 8MHz)
@@ -107,40 +110,67 @@ void calculate_distance(void){
 		display_text(string);
 }
 
+//Don't use DDRC because the LCD uses it.
 int main(void)
 {
  	init_lcd();
 	wait(100);
-	timer1Init();
-	wait(100);
+/*	timer1Init();*/
+/*	wait(100);*/
 /*	timer0Init();*/
-	timer2Init();
+/*	timer2Init();*/
 	 
-	DDRF = 0x01;
-	DDRA = 0xFF;
+	//DDRF = 0x01;
+	//DDRA = 0xFF;
+	
+	unsigned int distance;
+	
+	DDRF = (1 << TRIG); // TRIG ? ??
+	DDRF &= ~(1 << ECHO); // ECHO? ??
+	sei();
 	 
     while (1) 
     {
 		
-		PORTF = 0x01; //sends a high signal
-		wait_us(50); //duration of the pulse in microseconds(us)
-		PORTF = 0x00; //sends a low signal
+		//PORTF = 0x01; //sends a high signal
+		//wait_us(50); //duration of the pulse in microseconds(us)
+		//PORTF = 0x00; //sends a low signal
 		
+		//start code for buzzer
 // 		PORTA = 0x03;
 // 		wait(20);
 // 		PORTA = 0x00;
-		PORTA = TCNT2;
-		wait(100);
+// 		PORTA = TCNT2;
+// 		wait(100);
 
 		
 // 		lcd_clear();
 // 		dtostrf(TCNT0, 2, 2, string);/* distance to string */
 // 		strcat(string, " timer0");	/* Concat unit i.e.cm */
 // 		display_text(string);
+
+		//end code for buzzer
 		
 /*		calculate_distance();*/
 
+		TCCR1B = 0x03;
+		PORTF &= ~(1<<TRIG); 
+		wait_us(10); 
+		PORTF |= (1<<TRIG); 
+		wait_us(10); 
+		PORTF &= ~(1<<TRIG); 
+		while(!(PINF & (1<<ECHO))); 
+		TCNT1 = 0x0000; 
+		while(PINF & (1<<ECHO)); 
+		TCCR1B = 0x00; 
+		distance = (unsigned int)(340UL * (TCNT1 * 4 / 2) / 1000); 
 
+		lcd_clear();
+		dtostrf(distance, 2, 2, string);/* distance to string */
+		strcat(string, " cm   ");	/* Concat unit i.e.cm */
+		display_text(string);
+
+		wait(200);
 		//wait(1000); //duration of the time in between the pulses in miliseconds(ms)
 		
     }
