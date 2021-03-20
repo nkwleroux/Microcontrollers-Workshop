@@ -21,6 +21,8 @@ void wait_us(int ms) {
 	}
 }
 
+//todo	Change TCCR1A to external clock source on falling edge. 
+//		Maybe add another time for rising edge and compare the length to get the difference.
 void timer1Init(void) {
 	OCR1A = 31500; // 16-bits compare value of counter 1
 	TIMSK |= 1 << 4; // T1 compare match A interrupt enable
@@ -35,29 +37,51 @@ ISR( TIMER1_COMPA_vect ) {
 	sCount++;
 }
 
-void calculate_distance(void){
-// 		while(PORTF != 0x02 ){
-// 			lcd_clear();
-// 				char str[10];
-// 				sprintf(str, "%d", sCount);
-// 				display_text(str);
-// 				wait(1);
-// 		}
-//
-// 		startTime = sCount;
-// 		sCount = 0;
-//
-// 		while(PORF != 0x00);
-// 		stopTime = sCount;
-// 		sCount = 0;
-//
-// 		timeDiffT = stopTime - startTime;
-// 		rangeCm = timeDiffT / 58;
+void timer0Init(void){
+	OCR0 = 128;				//Value in which TCNT0 will be compared to. (randomly chosen)
+	TIMSK |= 1 << OCIE0;	//Timer/Counter0 Output Compare Match Interrupt Enable
+	sei();					//Enable global interrupts (not sure if needed more than once) 
+	TCCR0= 0b01111101;		//0		= Force Output Compare (false)
+							//1..1	= Waveform Generation Mode (fast pwm [creates high frequency])
+							//.11.	= Compare Match Output Mode (set OC0 on compare match, clear OC0 at BOTTOM)
+							//101	= Clock Select (clkTOS/128)
+}
 
-// 		lcd_clear();
-// 		dtostrf(rangeCm, 2, 2, string);/* distance to string */
-// 		strcat(string, " cm   ");	/* Concat unit i.e.cm */
-// 		display_text(string);
+ISR( TIMER0_COMP_vect ){
+	
+	
+	
+	
+}
+
+char string[10];
+int startTime,stopTime,timeDiffT;
+float rangeCm;
+
+//doesn't work
+void calculate_distance(void){
+		while(PORTF != 0x02 ){
+			lcd_clear();
+			char str[10];
+			sprintf(str, "%d", sCount);
+			display_text(str);
+			wait(1);
+		}
+
+		startTime = sCount;
+		sCount = 0;
+
+		while(PORF != 0x00);
+		stopTime = sCount;
+		sCount = 0;
+
+		timeDiffT = stopTime - startTime;
+		rangeCm = timeDiffT / 58;
+
+		lcd_clear();
+		dtostrf(rangeCm, 2, 2, string);/* distance to string */
+		strcat(string, " cm   ");	/* Concat unit i.e.cm */
+		display_text(string);
 }
 
 int main(void)
@@ -65,18 +89,16 @@ int main(void)
  	init_lcd();
 	wait(100);
 	timer1Init();
+	wait(100);
+	timer1Init();
 	 
 	DDRF = 0x01;
-	DDRA = 0xFF;
+	DDRA = 0x01;
 	
 // 	display_text("init test");
 // 	set_cursor(40);
 // 	display_text("& wait 1 sec");
 // 	wait(1000); //1 sec
-	
-// 	char string[10];
-// 	int startTime,stopTime,timeDiffT;
-// 	float rangeCm;
 	 
     while (1) 
     {
@@ -88,6 +110,11 @@ int main(void)
 		PORTA = 0x01;
 		wait(20);
 		PORTA = 0x00;
+		
+		lcd_clear();
+		dtostrf(TCNT0, 2, 2, string);/* distance to string */
+		strcat(string, " timer0   ");	/* Concat unit i.e.cm */
+		display_text(string);
 		
 /*		calculate_distance();*/
 
