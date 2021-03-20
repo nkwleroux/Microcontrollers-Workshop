@@ -45,6 +45,7 @@ void timer0Init(void){
 							//1..1	= Waveform Generation Mode (fast pwm [creates high frequency])
 							//.11.	= Compare Match Output Mode (set OC0 on compare match, clear OC0 at BOTTOM)
 							//101	= Clock Select (clkTOS/128)
+	TCNT0 = 0;
 }
 
 ISR( TIMER0_COMP_vect ){
@@ -52,6 +53,26 @@ ISR( TIMER0_COMP_vect ){
 	
 	
 	
+}
+
+int msCounter = 0;
+
+ISR( TIMER2_COMP_vect )
+{
+	msCounter++;
+}
+
+void timer2Init(void){
+	OCR2 = 7;	//7 bits
+	TCCR2 = 1 << WGM21; // Clear counter on Compare match (CTC) mode (WGM21:0 = 2)
+	// counter is cleared to zero when the counter value
+	// TCNT2 matches OCR2.
+	// WGM21 = 3;
+	
+	TIMSK = TIMSK | 1<<OCIE2; //Sets the output compare match interrupt to true (enables it)
+	TCCR2 |= 1<<CS22 | 0<<CS21 | 1<<CS20; //Set prescaler to clk I/O 1024 (clock select)
+	TCNT2 = 0;	//Sets the value to 0;
+	sei();
 }
 
 char string[10];
@@ -90,17 +111,11 @@ int main(void)
 	wait(100);
 	timer1Init();
 	wait(100);
-	timer0Init();
+/*	timer0Init();*/
+	timer2Init();
 	 
 	DDRF = 0x01;
 	DDRA = 0xFF;
-	
-// 	display_text("init test");
-// 	set_cursor(40);
-// 	display_text("& wait 1 sec");
-// 	wait(1000); //1 sec
-
-int i = 0;
 	 
     while (1) 
     {
@@ -109,20 +124,12 @@ int i = 0;
 		wait_us(50); //duration of the pulse in microseconds(us)
 		PORTF = 0x00; //sends a low signal
 		
-		PORTA = 0x03;
-		wait(20);
-		PORTA = 0x00;
-		i++;
-		if(i > 8){
-			i = 0;
-		}
-		
-		//for (int i = 0; i < 8; i++)
-		//{
-			PORTA = 1 << i;
-			wait(50);
-			//PORTA = 0x00;
-		//}
+// 		PORTA = 0x03;
+// 		wait(20);
+// 		PORTA = 0x00;
+		PORTA = TCNT2;
+		wait(50);
+
 		
 // 		lcd_clear();
 // 		dtostrf(TCNT0, 2, 2, string);/* distance to string */
