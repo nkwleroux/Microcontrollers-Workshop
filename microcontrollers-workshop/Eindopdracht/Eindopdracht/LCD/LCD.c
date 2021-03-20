@@ -7,9 +7,6 @@
 
 #define F_CPU 8e6
 
-#include <avr/io.h>
-#include <util/delay.h>
-#include <avr/interrupt.h>
 #include "Include/LCD.h"
 
 static void wait_ms(int ms) {
@@ -18,79 +15,79 @@ static void wait_ms(int ms) {
 	}
 }
 
-void init_lcd( void ) {
-	DDRC = 0xFF;
-	PORTC = 0x00;
-
-	PORTC = 0x20;
-	lcd_strobe_lcd_e();
-
-	PORTC = 0x20;
-	lcd_strobe_lcd_e();
-	
-	PORTC = 0x80;
-	lcd_strobe_lcd_e();
-
-	PORTC = 0x00;
-	lcd_strobe_lcd_e();
-	
-	PORTC = 0xF0;
-	lcd_strobe_lcd_e();
-
-	PORTC = 0x00;
-	lcd_strobe_lcd_e();
-	PORTC = 0x60;
-	lcd_strobe_lcd_e();
-	
-	lcd_clear();
-	set_cursor(0);
-	
-	wait_ms(10);
-}
-
-void lcd_strobe_lcd_e(void) {
+void lcd_ledge_e(void) {
 	PORTC |= (1<<3);	// E high
 	wait_ms(1);
 	PORTC &= ~(1<<3);  	// E low
 	wait_ms(1);
 }
 
+void lcd_init( void ) {
+	DDRC = 0xFF;
+	PORTC = 0x00;
+
+	PORTC = 0x20;
+	lcd_ledge_e();
+
+	PORTC = 0x20;
+	lcd_ledge_e();
+	
+	PORTC = 0x80;
+	lcd_ledge_e();
+
+	PORTC = 0x00;
+	lcd_ledge_e();
+	
+	PORTC = 0xF0;
+	lcd_ledge_e();
+
+	PORTC = 0x00;
+	lcd_ledge_e();
+	PORTC = 0x60;
+	lcd_ledge_e();
+	
+	lcd_clear();
+	lcd_set_cursor(0);
+	
+	wait_ms(10);
+}
+
 void lcd_write_data(unsigned char byte ) {
 	// First nibble.
 	PORTC = byte;
 	PORTC |= (1<<2);
-	lcd_strobe_lcd_e();
+	lcd_ledge_e();
 
 	// Second nibble
 	PORTC = (byte << 4);
 	PORTC |= (1<<2);
-	lcd_strobe_lcd_e();
+	lcd_ledge_e();
 }
 
 void lcd_write_command(unsigned char byte) {
 	// First nibble.
 	PORTC = byte;
 	PORTC |= (0<<2);
-	lcd_strobe_lcd_e();
+	lcd_ledge_e();
 
 	// Second nibble
 	PORTC = (byte << 4);
 	PORTC |= (0<<2);
-	lcd_strobe_lcd_e();
+	lcd_ledge_e();
 }
 
 void lcd_clear() {
 	lcd_write_command(0x01); 
 	wait_ms(2);
-	set_cursor(0);
+	lcd_set_cursor(0);
 }
 
-void display_text(char *str) {
+void lcd_display_text(char *str) {
 	for(;*str; str++){
 		lcd_write_data(*str);
 	}
 }
 
-void set_cursor( int position ) {
+void lcd_set_cursor( int position ) {
 	lcd_write_command(0x80 | position);
 }

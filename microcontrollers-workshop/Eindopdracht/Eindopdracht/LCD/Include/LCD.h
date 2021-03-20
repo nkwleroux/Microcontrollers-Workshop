@@ -12,12 +12,12 @@
 #include <util/delay.h>
 #include <avr/interrupt.h>
 
-void init_lcd(void);
-void lcd_strobe_lcd_e(void);
+void lcd_init(void);
+void lcd_ledge_e(void);
 void lcd_write_data(unsigned char byte );
 void lcd_write_command(unsigned char byte);
 void lcd_clear();
-void display_text(char *str);
-void set_cursor(int position);
+void lcd_display_text(char *str);
+void lcd_set_cursor(int position);
 
 #endif

@@ -4,13 +4,9 @@
  * Created: 20/3/2021 1:28:50 PM
  *  Author: Nic
  */ 
+
 #define F_CPU 8e6
 
-#include <avr/io.h>
-#include <avr/interrupt.h>
-#include <stdio.h>
-#include <util/delay.h>
-#include <math.h>
 #include "Include/Buzzer.h"
 
 static void wait_ms(int ms) {
@@ -27,18 +23,7 @@ ISR(TIMER1_OVF_vect) {
 	}
 }
 
-void init_Buzzer(void){
-	//Buzzer init
-	timer1_init();
-	PORTA = 0x00;
-	DDRA = 0x10;
-	EIMSK = 0x00;
-	TIMSK = 0x14;
-	ETIMSK = 0X00;
-	sei();
-}
-
-void timer1_init(void) {
+static void timer1_init(void) {
 	TCCR1B = 0x00;
 	
 	TCNT1H = T1HIGHCNT;
@@ -60,78 +45,89 @@ void timer1_init(void) {
 	TCCR1B = 0x02;
 }
 
-void sound(int freq){
+void buzzer_init(void){
+	//Buzzer init
+	timer1_init();
+	PORTA = 0x00;
+	DDRA = 0x10;
+	EIMSK = 0x00;
+	TIMSK = 0x14;
+	ETIMSK = 0X00;
+	sei();
+}
+
+void buzzer_sound(int freq){
 	Soundonoff = ON;
 	T1HIGHCNT = (0xFFFF-floor(1000000/freq)) / 0x100;
 	T1LOWCNT = 0xFFFF-floor(1000000/freq) - 0xFF00;
 }
 
-void nosound(void){
+void buzzer_no_sound(void){
 	Soundonoff = OFF;
 	wait_ms(100);
 }
 
-void soundNote(int tone, int dly){
-	sound(tone);
+void buzzer_sound_Note(int tone, int dly){
+	buzzer_sound(tone);
 	wait_ms(dly*2);
-	nosound();
+	buzzer_no_sound();
 }
 
-void test_sounds(void){
-	soundNote(C1,DLY_4);
-	soundNote(D1,DLY_4);
-	soundNote(E1,DLY_4);
-	soundNote(E1,DLY_4);
-	soundNote(C1,DLY_4);
-	soundNote(E1,DLY_4);
-	soundNote(G1,DLY_8);
-	soundNote(A1,DLY_8);
-	soundNote(G1,DLY_4);
-	soundNote(C1,DLY_4);
-	soundNote(D1,DLY_4);
-	soundNote(E1,DLY_4);
-	soundNote(E1,DLY_4);
-	soundNote(C1,DLY_4);
-	soundNote(E1,DLY_4);
-	soundNote(G1,DLY_8);
-	soundNote(A1,DLY_8);
-	soundNote(G1,DLY_4);
-	soundNote(A1,DLY_2);
-	soundNote(G1,DLY_4);
-	soundNote(E1,DLY_4);
-	soundNote(A1,DLY_2);
-	soundNote(G1,DLY_4);
-	soundNote(E1,DLY_4);
-	soundNote(D1,DLY_4);
-	soundNote(D1,DLY_4);
-	soundNote(C1,DLY_4);
-	soundNote(D1,DLY_4);
-	soundNote(E1,DLY_4);
-	soundNote(G1,DLY_4);
-	soundNote(G1,DLY_4);
-	soundNote(A1,DLY_4);
-	soundNote(A1,DLY_8);
-	soundNote(G1,DLY_4);
-	soundNote(A1,DLY_4);
-	soundNote(C2,DLY_4);
-	soundNote(C2,DLY_4);
-	soundNote(C2,DLY_4);
-	soundNote(G1,DLY_4);
-	soundNote(G1,DLY_4);
-	soundNote(E1,DLY_4);
-	soundNote(D1,DLY_4);
-	soundNote(C1,DLY_2);
-	soundNote(D1,DLY_4);
-	soundNote(E1,DLY_8);
-	soundNote(C1,DLY_4);
-	soundNote(E1,DLY_4);
-	soundNote(G1,DLY_4);
-	soundNote(G1,DLY_4);
-	soundNote(G1,DLY_4);
-	soundNote(D1,DLY_4);
-	soundNote(E1,DLY_8);
-	soundNote(F1,DLY_8);
-	soundNote(E1,DLY_4);
-	soundNote(D1,DLY_4);
-	soundNote(C1,DLY_2);
+void buzzer_test_sounds(void){
+	buzzer_sound_Note(C1,DLY_4);
+	buzzer_sound_Note(D1,DLY_4);
+	buzzer_sound_Note(E1,DLY_4);
+	buzzer_sound_Note(E1,DLY_4);
+	buzzer_sound_Note(C1,DLY_4);
+	buzzer_sound_Note(E1,DLY_4);
+	buzzer_sound_Note(G1,DLY_8);
+	buzzer_sound_Note(A1,DLY_8);
+	buzzer_sound_Note(G1,DLY_4);
+	buzzer_sound_Note(C1,DLY_4);
+	buzzer_sound_Note(D1,DLY_4);
+	buzzer_sound_Note(E1,DLY_4);
+	buzzer_sound_Note(E1,DLY_4);
+	buzzer_sound_Note(C1,DLY_4);
+	buzzer_sound_Note(E1,DLY_4);
+	buzzer_sound_Note(G1,DLY_8);
+	buzzer_sound_Note(A1,DLY_8);
+	buzzer_sound_Note(G1,DLY_4);
+	buzzer_sound_Note(A1,DLY_2);
+	buzzer_sound_Note(G1,DLY_4);
+	buzzer_sound_Note(E1,DLY_4);
+	buzzer_sound_Note(A1,DLY_2);
+	buzzer_sound_Note(G1,DLY_4);
+	buzzer_sound_Note(E1,DLY_4);
+	buzzer_sound_Note(D1,DLY_4);
+	buzzer_sound_Note(D1,DLY_4);
+	buzzer_sound_Note(C1,DLY_4);
+	buzzer_sound_Note(D1,DLY_4);
+	buzzer_sound_Note(E1,DLY_4);
+	buzzer_sound_Note(G1,DLY_4);
+	buzzer_sound_Note(G1,DLY_4);
+	buzzer_sound_Note(A1,DLY_4);
+	buzzer_sound_Note(A1,DLY_8);
+	buzzer_sound_Note(G1,DLY_4);
+	buzzer_sound_Note(A1,DLY_4);
+	buzzer_sound_Note(C2,DLY_4);
+	buzzer_sound_Note(C2,DLY_4);
+	buzzer_sound_Note(C2,DLY_4);
+	buzzer_sound_Note(G1,DLY_4);
+	buzzer_sound_Note(G1,DLY_4);
+	buzzer_sound_Note(E1,DLY_4);
+	buzzer_sound_Note(D1,DLY_4);
+	buzzer_sound_Note(C1,DLY_2);
+	buzzer_sound_Note(D1,DLY_4);
+	buzzer_sound_Note(E1,DLY_8);
+	buzzer_sound_Note(C1,DLY_4);
+	buzzer_sound_Note(E1,DLY_4);
+	buzzer_sound_Note(G1,DLY_4);
+	buzzer_sound_Note(G1,DLY_4);
+	buzzer_sound_Note(G1,DLY_4);
+	buzzer_sound_Note(D1,DLY_4);
+	buzzer_sound_Note(E1,DLY_8);
+	buzzer_sound_Note(F1,DLY_8);
+	buzzer_sound_Note(E1,DLY_4);
+	buzzer_sound_Note(D1,DLY_4);
+	buzzer_sound_Note(C1,DLY_2);
 }
