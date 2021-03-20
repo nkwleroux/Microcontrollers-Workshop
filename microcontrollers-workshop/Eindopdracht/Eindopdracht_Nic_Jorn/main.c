@@ -111,10 +111,10 @@ int main(void)
 		wait(20);
 		PORTA = 0x00;
 		
-// 		lcd_clear();
-// 		dtostrf(TCNT0, 2, 2, string);/* distance to string */
-// 		strcat(string, " timer0");	/* Concat unit i.e.cm */
-// 		display_text(string);
+		lcd_clear();
+		dtostrf(TCNT0, 2, 2, string);/* distance to string */
+		strcat(string, " timer0");	/* Concat unit i.e.cm */
+		display_text(string);
 		
 /*		calculate_distance();*/
 
