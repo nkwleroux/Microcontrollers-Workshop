@@ -39,7 +39,7 @@ ISR( TIMER1_COMPA_vect ) {
 
 void timer0Init(void){
 	OCR0 = 128;				//Value in which TCNT0 will be compared to. (randomly chosen)
-	TIMSK |= 1 << OCIE0;	//Timer/Counter0 Output Compare Match Interrupt Enable
+	TIMSK = TIMSK | 1 << OCIE0;	//Timer/Counter0 Output Compare Match Interrupt Enable
 	sei();					//Enable global interrupts (not sure if needed more than once) 
 	TCCR0= 0b01111101;		//0		= Force Output Compare (false)
 							//1..1	= Waveform Generation Mode (fast pwm [creates high frequency])
@@ -64,11 +64,13 @@ ISR( TIMER2_COMP_vect )
 
 void timer2Init(void){
 	OCR2 = 7;	//7 bits
-	TCCR2 = 1 << WGM21; // Clear counter on Compare match (CTC) mode (WGM21:0 = 2)
-	// counter is cleared to zero when the counter value
-	// TCNT2 matches OCR2.
-	// WGM21 = 3;
-	
+// 	TCCR2 = 1 << WGM21; // Clear counter on Compare match (CTC) mode (WGM21:0 = 2)
+// 						// counter is cleared to zero when the counter value
+// 						// TCNT2 matches OCR2.
+// 						// WGM21 = 3;
+
+	TCCR2 |= 1 << WGM21 | 1 << WGM20;	// Waveform Generation Mode (Fast PWM)
+		
 	TIMSK = TIMSK | 1<<OCIE2; //Sets the output compare match interrupt to true (enables it)
 	TCCR2 |= 1<<CS22 | 0<<CS21 | 1<<CS20; //Set prescaler to clk I/O 1024 (clock select)
 	TCNT2 = 0;	//Sets the value to 0;
@@ -128,7 +130,7 @@ int main(void)
 // 		wait(20);
 // 		PORTA = 0x00;
 		PORTA = TCNT2;
-		wait(50);
+		wait(100);
 
 		
 // 		lcd_clear();
