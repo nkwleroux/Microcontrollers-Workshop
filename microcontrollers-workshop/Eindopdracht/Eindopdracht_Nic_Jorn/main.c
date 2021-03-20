@@ -163,8 +163,8 @@ int main(void)
 
 		//end code for buzzer
 		
-		SoundNotice();
-
+		//SoundNotice();
+		pong();
 
 		wait(1000); //duration of the time in between the pulses in miliseconds(ms)
 		

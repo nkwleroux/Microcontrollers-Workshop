@@ -63,6 +63,7 @@ static volatile int Soundonoff = ON;
 extern void timer1_init(void);
 extern void soundNote(int tone, int dly);
 extern void SoundNotice(void);
+extern void pong(void);
 
 // private function
 ISR(TIMER1_OVF_vect);
