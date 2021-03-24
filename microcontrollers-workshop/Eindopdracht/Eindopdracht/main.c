@@ -10,6 +10,7 @@
 #include "Buzzer/Include/Buzzer.h"
 #include "LCD/Include/LCD.h"
 #include "UltraSonicSensor/Include/UltraSonicSensor.h"
+#include <stdio.h>
 
 static void wait_ms(int ms) {
 	for (int i=0; i<ms; i++) {
@@ -20,15 +21,21 @@ static void wait_ms(int ms) {
 void init_components(void){
 	lcd_init();
 	wait_ms(100);
-	buzzer_init();
+	//init_Buzzer();
 	wait_ms(100);
 	ussensor_init();
 	wait_ms(100);
+	sei();
 }
 
 //Don't use DDRA & DDRC because the LCD uses it.
 int main(void)
 {
+	init_components();
+	
+	int16_t COUNTA = 0;
+	char SHOWA [16];
+	
     while (1) 
     {
 		//start code for sensor
@@ -41,14 +48,22 @@ int main(void)
 		
 		//start code for buzzer
 		
-		buzzer_test_sounds();
+		//test_sounds();
 
 		//end code for buzzer
 
 		//start code for lcd
-
+		
+		
 		lcd_clear();
-		lcd_display_text("Test lcd");
+		COUNTA = calculate_distance();
+		//COUNTA = get_i();
+		sprintf(SHOWA,"%d test",COUNTA);
+		//itoa(COUNTA,SHOWA,10);
+		lcd_display_text(SHOWA);
+
+// 		lcd_clear();
+// 		lcd_display_text("Test lcd");
 
 		//end code for lcd
 		

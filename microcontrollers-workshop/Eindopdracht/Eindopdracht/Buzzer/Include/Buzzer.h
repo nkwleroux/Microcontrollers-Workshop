@@ -8,12 +8,6 @@
 #ifndef Buzzer_H_
 #define Buzzer_H_
 
-#include <avr/io.h>
-#include <avr/interrupt.h>
-#include <stdio.h>
-#include <util/delay.h>
-#include <math.h>
-
 #define ON 1
 #define OFF 0
 
@@ -56,12 +50,13 @@ static volatile int Soundonoff = ON;
 
 ISR(TIMER1_OVF_vect);
 
-void buzzer_init(void);
+void init_Buzzer(void);
+void timer1_init(void);
 
-void buzzer_sound(int freq);
-void buzzer_no_sound(void);
+void sound(int freq);
+void nosound(void);
 
-void buzzer_sound_Note(int tone, int dly);
-void buzzer_test_sounds(void);
+void soundNote(int tone, int dly);
+void test_sounds(void);
 
 #endif /* Buzzer_H_ */
