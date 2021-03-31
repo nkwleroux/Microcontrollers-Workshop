@@ -44,14 +44,13 @@
 #define DLY_8	DLY_4/2	
 #define DLY_16	DLY_4/4	
 
-static volatile long T1HIGHCNT = 0xFD, T1LOWCNT = 0X66;
+static volatile long T1HIGHCNT = 0xFD, T1LOWCNT = 0X66, T3HIGHCNT = 0xFD, T3LOWCNT = 0X66;;
 static volatile int SoundState = ON;
 static volatile int Soundonoff = ON;
 
-ISR(TIMER1_OVF_vect);
-
 void init_Buzzer(void);
-void timer1_init(void);
+/*void timer1_init(void);*/
+void timer3_init(void);
 
 void sound(int freq);
 void nosound(void);

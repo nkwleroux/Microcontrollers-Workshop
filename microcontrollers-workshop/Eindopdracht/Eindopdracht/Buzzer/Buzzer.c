@@ -19,51 +19,48 @@ static void wait_ms(int ms) {
 	}
 }
 
-ISR(TIMER1_OVF_vect) {
-	TCNT1H = T1HIGHCNT;
-	TCNT1L = T1LOWCNT;
+ISR(TIMER3_OVF_vect) {
+	TCNT3H = T3HIGHCNT;
+	TCNT3L = T3LOWCNT;
 	if(Soundonoff == ON){
 		PORTA = PORTA ^ 0x10;
 	}
 }
 
+//todo
 void init_Buzzer(void){
 	//Buzzer init
-	timer1_init();
+	timer3_init();
 	PORTA = 0x00;
 	DDRA = 0x10;
 	EIMSK = 0x00;
-	TIMSK = 0x14;
-	ETIMSK = 0X00;
+	ETIMSK = 0x00;
+	ETIMSK = 0x14; 
 	sei();
 }
 
-void timer1_init(void) {
-	TCCR1B = 0x00;
+void timer3_init(void) {
+	TCCR3B = 0x00;
 	
-	TCNT1H = T1HIGHCNT;
-	TCNT1L = T1LOWCNT;
+	//Gives access to read and write operations.
+	TCNT3H = T1HIGHCNT;
+	TCNT3L = T1LOWCNT;
 	
-	OCR1AH = 0x02;
-	OCR1AL = 0x9A;
+	//High byte must be written to before low byte.
+	OCR3AH = 0x02; 
+	OCR3AL = 0x9A;
 	
-	OCR1BH = 0x02;
-	OCR1BL = 0x9A;
+	ICR3H = 0x02;
+	ICR3L = 0x9A;
 	
-	OCR1CH = 0x02;
-	OCR1CL = 0x9A;
-	
-	ICR1H = 0x02;
-	ICR1L = 0x9A;
-	
-	TCCR1A = 0x00;
-	TCCR1B = 0x02;
+	TCCR3A = 0x00; 
+	TCCR3B = 0x02; // Prescaler 8
 }
 
 void sound(int freq){
 	Soundonoff = ON;
-	T1HIGHCNT = (0xFFFF-floor(1000000/freq)) / 0x100;
-	T1LOWCNT = 0xFFFF-floor(1000000/freq) - 0xFF00;
+	T3HIGHCNT = (0xFFFF-floor(1000000/freq)) / 0x100;
+	T3LOWCNT = 0xFFFF-floor(1000000/freq) - 0xFF00;
 }
 
 void nosound(void){
@@ -85,53 +82,53 @@ void test_sounds(void){
 	soundNote(C1,DLY_4);
 	soundNote(E1,DLY_4);
 	soundNote(G1,DLY_8);
-	soundNote(A1,DLY_8);
-	soundNote(G1,DLY_4);
-	soundNote(C1,DLY_4);
-	soundNote(D1,DLY_4);
-	soundNote(E1,DLY_4);
-	soundNote(E1,DLY_4);
-	soundNote(C1,DLY_4);
-	soundNote(E1,DLY_4);
-	soundNote(G1,DLY_8);
-	soundNote(A1,DLY_8);
-	soundNote(G1,DLY_4);
-	soundNote(A1,DLY_2);
-	soundNote(G1,DLY_4);
-	soundNote(E1,DLY_4);
-	soundNote(A1,DLY_2);
-	soundNote(G1,DLY_4);
-	soundNote(E1,DLY_4);
-	soundNote(D1,DLY_4);
-	soundNote(D1,DLY_4);
-	soundNote(C1,DLY_4);
-	soundNote(D1,DLY_4);
-	soundNote(E1,DLY_4);
-	soundNote(G1,DLY_4);
-	soundNote(G1,DLY_4);
-	soundNote(A1,DLY_4);
-	soundNote(A1,DLY_8);
-	soundNote(G1,DLY_4);
-	soundNote(A1,DLY_4);
-	soundNote(C2,DLY_4);
-	soundNote(C2,DLY_4);
-	soundNote(C2,DLY_4);
-	soundNote(G1,DLY_4);
-	soundNote(G1,DLY_4);
-	soundNote(E1,DLY_4);
-	soundNote(D1,DLY_4);
-	soundNote(C1,DLY_2);
-	soundNote(D1,DLY_4);
-	soundNote(E1,DLY_8);
-	soundNote(C1,DLY_4);
-	soundNote(E1,DLY_4);
-	soundNote(G1,DLY_4);
-	soundNote(G1,DLY_4);
-	soundNote(G1,DLY_4);
-	soundNote(D1,DLY_4);
-	soundNote(E1,DLY_8);
-	soundNote(F1,DLY_8);
-	soundNote(E1,DLY_4);
-	soundNote(D1,DLY_4);
-	soundNote(C1,DLY_2);
+// 	soundNote(A1,DLY_8);
+// 	soundNote(G1,DLY_4);
+// 	soundNote(C1,DLY_4);
+// 	soundNote(D1,DLY_4);
+// 	soundNote(E1,DLY_4);
+// 	soundNote(E1,DLY_4);
+// 	soundNote(C1,DLY_4);
+// 	soundNote(E1,DLY_4);
+// 	soundNote(G1,DLY_8);
+// 	soundNote(A1,DLY_8);
+// 	soundNote(G1,DLY_4);
+// 	soundNote(A1,DLY_2);
+// 	soundNote(G1,DLY_4);
+// 	soundNote(E1,DLY_4);
+// 	soundNote(A1,DLY_2);
+// 	soundNote(G1,DLY_4);
+// 	soundNote(E1,DLY_4);
+// 	soundNote(D1,DLY_4);
+// 	soundNote(D1,DLY_4);
+// 	soundNote(C1,DLY_4);
+// 	soundNote(D1,DLY_4);
+// 	soundNote(E1,DLY_4);
+// 	soundNote(G1,DLY_4);
+// 	soundNote(G1,DLY_4);
+// 	soundNote(A1,DLY_4);
+// 	soundNote(A1,DLY_8);
+// 	soundNote(G1,DLY_4);
+// 	soundNote(A1,DLY_4);
+// 	soundNote(C2,DLY_4);
+// 	soundNote(C2,DLY_4);
+// 	soundNote(C2,DLY_4);
+// 	soundNote(G1,DLY_4);
+// 	soundNote(G1,DLY_4);
+// 	soundNote(E1,DLY_4);
+// 	soundNote(D1,DLY_4);
+// 	soundNote(C1,DLY_2);
+// 	soundNote(D1,DLY_4);
+// 	soundNote(E1,DLY_8);
+// 	soundNote(C1,DLY_4);
+// 	soundNote(E1,DLY_4);
+// 	soundNote(G1,DLY_4);
+// 	soundNote(G1,DLY_4);
+// 	soundNote(G1,DLY_4);
+// 	soundNote(D1,DLY_4);
+// 	soundNote(E1,DLY_8);
+// 	soundNote(F1,DLY_8);
+// 	soundNote(E1,DLY_4);
+// 	soundNote(D1,DLY_4);
+// 	soundNote(C1,DLY_2);
 }

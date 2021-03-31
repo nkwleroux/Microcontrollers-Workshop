@@ -15,8 +15,6 @@ static volatile enum interrupt_status int_stat = INTERRUPT_RISING;
 
 uint16_t timer_dist = 125; // time measured by timer;
 
-volatile int i = 0;
-
 static void wait_us(int ms) {
 	for (int i=0; i<ms; i++) {
 		_delay_us( 1 );		// library function (max 30 ms at 8MHz)
@@ -77,11 +75,17 @@ ISR(INT1_vect)
 }
 
 int calculate_distance(void){
-		/*return timer_dist /58;*/
-	return timer_dist * (340 / 2) / 58 / 5;
+	return timer_dist * 340 / 58 / 10;
 }
 
-int get_i(){
-	return i;
+int frequency_distance(void){
+	return 2500 - (timer_dist * 340 / 20);
 }
+
+//DEBUG
+int get_timer_dist(void){
+	return timer_dist * 340 / 20;
+}
+
+
 
