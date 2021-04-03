@@ -121,6 +121,6 @@ void buzzer_sound_off(void);
 void buzzer_sound(int freq);
 void buzzer_sound_note(int tone, int dly);
 
-void play_song(void);
+void buzzer_play_song(void);
 
 #endif /* Buzzer_H_ */

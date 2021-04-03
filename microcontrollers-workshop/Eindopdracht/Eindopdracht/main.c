@@ -156,7 +156,7 @@ int main(void){
 		if(PING & 0x04){
 			lcd_clear();
 			lcd_display_text("playing song");
-			play_song();
+			buzzer_play_song();
 			lcd_clear();
 			lcd_display_text("finished song");
 			wait_ms(500);

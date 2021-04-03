@@ -80,7 +80,7 @@ void buzzer_sound_note(int tone, int dly){
 }
 
 //Plays a short song
-void play_song(void){
+void buzzer_play_song(void){
 	buzzer_sound_note(N_D3,DLY_8);
 	buzzer_sound_note(N_D3,DLY_8);
 	buzzer_sound_note(N_C5,DLY_8);
