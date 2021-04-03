@@ -15,7 +15,6 @@
 void ussensor_init(void);
 void ussensor_pulse_signal(void);
 int calculate_distance(void);
-int get_timer_dist(void);
 int frequency_distance(void);
 
 #endif /* UltraSonicSensor_H_ */

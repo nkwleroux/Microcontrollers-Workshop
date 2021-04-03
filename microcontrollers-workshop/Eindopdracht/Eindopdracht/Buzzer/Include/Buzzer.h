@@ -2,7 +2,7 @@
  * Buzzer.h
  *
  * Created: 20/3/2021 1:27:16 PM
- *  Author: Nic
+ *  Author: Nic & Jorn
  */ 
 
 #ifndef Buzzer_H_
@@ -11,6 +11,7 @@
 #define ON 1
 #define OFF 0
 
+//Note frequencies
 #define N_B0  31
 #define N_C1  33
 #define N_CS1 35
@@ -101,56 +102,25 @@
 #define N_D8  4699
 #define N_DS8 4978
 
-#define C1		523		
-#define C1_		554
-#define D1		587		
-#define D1_		622
-#define E1		659		
-#define F1		699		
-#define F1_		740
-#define G1		784		
-#define G1_		831
-#define A1		880		
-#define A1_		932
-#define B1		988	
-#define B1_		1043		
-#define C2		C1*2	
-#define C2_		C1_*2
-#define D2		D1*2	
-#define D2_		D1_*2
-#define E2		E1*2	
-#define F2		F1*2	
-#define F2_		F1_*2
-#define G2		G1*2	
-#define G2_ 	G1_*2
-#define A2		A2*2	
-#define A2_		A2_*2
-#define B2 		B1*2
-#define B2_ 	B1_*2	
-
-
+//Delays
 #define DLY_1	DLY_4*4	
 #define DLY_2	DLY_4*2	
-#define DLY_3	DLY_6/2
+#define DLY_3	DLY_6*2
 #define DLY_4 	800		
 #define DLY_6	600
 #define DLY_8	DLY_4/2	
 #define DLY_16	DLY_4/4	
 #define DLY_32	DLY_4/8
 
-static volatile long T1HIGHCNT = 0xFD, T1LOWCNT = 0X66, T3HIGHCNT = 0xFD, T3LOWCNT = 0X66;;
-static volatile int SoundState = ON;
-static volatile int Soundonoff = ON;
+static volatile long T3HIGHCNT = 0xFD, T3LOWCNT = 0X66;
+static volatile int soundState = ON;
 
-void init_Buzzer(void);
-/*void timer1_init(void);*/
-void timer3_init(void);
+void buzzer_init(void);
 
-void sound(int freq);
-void nosound(void);
+void buzzer_sound_off(void);
+void buzzer_sound(int freq);
+void buzzer_sound_note(int tone, int dly);
 
-void soundNote(int tone, int dly);
-void test_sounds(void);
-void test_sounds2(void);
+void play_song(void);
 
 #endif /* Buzzer_H_ */
