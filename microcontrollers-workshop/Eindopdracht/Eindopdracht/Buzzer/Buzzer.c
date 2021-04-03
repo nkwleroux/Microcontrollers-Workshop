@@ -56,6 +56,7 @@ void buzzer_init(void){
 	EIMSK = 0x00;
 	ETIMSK = 0x00;
 	ETIMSK = 0x14;
+	sei();
 }
 
 //Turns of the buzzer.
