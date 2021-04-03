@@ -15,7 +15,6 @@
 #define MinDistance 800
 #define CollisionTone N_FS5
 
-//Not sure if it works
 static volatile int oldDistance = 0;
 
 static void wait_ms(int ms) {
@@ -100,14 +99,14 @@ void sound_distance_in_hz_with_step(void){
 	if (oldDistance == 0)
 	{
 		buzzer_sound(distance);
-		}else{
+	}else{
 		if(distance > oldDistance){
 			while(distance > oldDistance){
 				oldDistance+=step;
 				buzzer_sound(oldDistance);
 				wait_ms(10);
 			}
-			}else if (distance < oldDistance){
+		}else if (distance < oldDistance){
 			while(distance < oldDistance){
 				oldDistance-=step;
 				buzzer_sound(oldDistance);
