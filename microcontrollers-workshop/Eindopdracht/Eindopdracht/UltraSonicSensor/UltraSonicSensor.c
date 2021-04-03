@@ -59,13 +59,13 @@ ISR(INT1_vect)
 	} 
 	//If it was generated on a falling edge (End echo).
 	else {
-		// set interrupt pin 1 on PORTD to rising edge
+		//Set interrupt pin 1 on PORTD to rising edge
 		EICRA = 0b00001100; //0x0c
 		
-		// read timer1 into time_dist
+		//Read timer1 into time_dist
 		timer_dist = TCNT1;
 		
-		// set interrupt status
+		//Set interrupt status
 		status = RISING_EDGE;
 	}
 }
