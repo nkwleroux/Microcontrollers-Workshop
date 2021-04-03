@@ -132,3 +132,25 @@ void test_sounds(void){
 // 	soundNote(D1,DLY_4);
 // 	soundNote(C1,DLY_2);
 }
+
+void test_sounds2(void){
+	soundNote(N_D3,DLY_8);
+	soundNote(N_D3,DLY_8);
+	soundNote(C1,DLY_8);
+	soundNote(N_D4,DLY_4);
+	soundNote(D2,DLY_8);
+	soundNote(N_A3,DLY_3);
+	wait_ms(DLY_32);
+	soundNote(N_GS3,DLY_4);
+	soundNote(D1,DLY_8);
+	soundNote(N_G3,DLY_4);
+	soundNote(N_F3,DLY_4);
+	soundNote(A1,DLY_8);
+	soundNote(N_D3,DLY_8);
+	soundNote(N_F3,DLY_8);
+	soundNote(N_G3,DLY_8);
+	soundNote(N_C3,DLY_8);
+	soundNote(N_C3,DLY_8);
+	soundNote(N_D4,DLY_4);
+	soundNote(N_A3,DLY_3);
+}
