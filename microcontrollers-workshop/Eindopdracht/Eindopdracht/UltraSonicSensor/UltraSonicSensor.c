@@ -9,6 +9,9 @@
 
 #include "Include/UltraSonicSensor.h"
 
+#define SpeedOfSound 340
+#define DistanceInCM 58
+
 enum interrupt_status {FALLING_EDGE, RISING_EDGE};
 
 static volatile enum interrupt_status status = RISING_EDGE;
@@ -72,12 +75,12 @@ ISR(INT1_vect)
 
 //Calculate distance in cm
 int calculate_distance(void){
-	return timer_dist * 340 / 58 / 10;
+	return timer_dist * SpeedOfSound / DistanceInCM / 10;
 }
 
 //Calculate frequency distance.
 int frequency_distance(void){
-	return 2500 - (timer_dist * 340 / 20);
+	return 2500 - (timer_dist * SpeedOfSound / 20);
 }
 
 
