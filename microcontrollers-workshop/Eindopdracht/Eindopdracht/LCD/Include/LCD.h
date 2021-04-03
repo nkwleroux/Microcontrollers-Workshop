@@ -2,7 +2,7 @@
  * LCD.h
  *
  * Created: 17/3/2021 9:18:09 AM
- *  Author: Nic
+ *  Author: Nic & Jorn
  */ 
 
 #ifndef LCD_H_
@@ -13,11 +13,8 @@
 #include <avr/interrupt.h>
 
 void lcd_init(void);
-void lcd_ledge_e(void);
-void lcd_write_data(unsigned char byte );
-void lcd_write_command(unsigned char byte);
-void lcd_clear();
+void lcd_clear(void);
 void lcd_display_text(char *str);
 void lcd_set_cursor(int position);
 
-#endif
+#endif /* LCD_H_ */

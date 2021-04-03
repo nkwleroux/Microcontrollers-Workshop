@@ -9,82 +9,75 @@
 
 #include "Include/UltraSonicSensor.h"
 
-enum interrupt_status {INTERRUPT_FALLING, INTERRUPT_RISING};
+enum interrupt_status {FALLING_EDGE, RISING_EDGE};
 
-static volatile enum interrupt_status int_stat = INTERRUPT_RISING;
+static volatile enum interrupt_status status = RISING_EDGE;
 
 uint16_t timer_dist = 125; // time measured by timer;
 
 static void wait_us(int ms) {
 	for (int i=0; i<ms; i++) {
-		_delay_us( 1 );		// library function (max 30 ms at 8MHz)
+		_delay_us( 1 );		
 	}
 }
 
-static void wait_ms(int ms) {
-	for (int i=0; i<ms; i++) {
-		_delay_ms( 1 );		// library function (max 30 ms at 8MHz)
-	}
-}
-
-void interrupt0_init(void){
+//Initializes interrupt 1
+void interrupt1_init(void){
 	EICRA = 0x0c; //INIT1 rising edge. 
 	EIMSK = 0x02; //Enable INT1.
 }
 
+//Initializes all the ultrasonic sensor components.
 void ussensor_init(void){
-	interrupt0_init();
-	DDRD = 0x01; // pulse
-	TCCR1A = 0b00000000; 
-	TCCR1B = 0b00001100; // CTC compare A, RUN
+	interrupt1_init();		//
+	DDRD = 0x01; 
+	TCCR1A = 0b00000000;	//Timer/Counter1 Control Register A 
+	TCCR1B = 0b00001100;	//Timer/Counter1 Control Register B CTC compare A
 }
 
+//Method used to pulse a signal to the ultrasonic sensor
 void ussensor_pulse_signal(void){
-	PORTD = 0x01; //sends a high signal
-	wait_us(10); //duration of the pulse in microseconds(us)
-	PORTD = 0x00; //sends a low signal	
+	PORTD = 0x01;	//Sends a high signal
+	wait_us(10);	//Duration of the pulse in microseconds(us)
+	PORTD = 0x00;	//Sends a low signal	
 }
 
+//Interrupt 1, makes use of timer 1
 ISR(INT1_vect)
 {
-	// if the interrupt was generated on a rising edge (start sending echo)
-	if (int_stat == INTERRUPT_RISING)
+	//If the interrupt was generated on a rising edge (Send echo).
+	if (status == RISING_EDGE)
 	{
-		// set interrupt pin 0 on PORTD to falling edge
+		//Set interrupt pin 1 on PORTD to falling edge
 		EICRA = 0b00001000; //0x08
-		//EICRA = 0b00001100;
 		
-		// reset the time in timer1
+		//Reset the time in timer1
 		TCNT1 = 0x00;
 		
-		// set interrupt status
-		int_stat = INTERRUPT_FALLING;
-	} else
-	// else if it was generated on a falling edge (end sending echo)
-	{
-		// set interrupt pin 0 on PORTD to rising edge
+		//Set interrupt status
+		status = FALLING_EDGE;
+	} 
+	//If it was generated on a falling edge (End echo).
+	else {
+		// set interrupt pin 1 on PORTD to rising edge
 		EICRA = 0b00001100; //0x0c
-		//EICRA = 0b00001000;
 		
 		// read timer1 into time_dist
 		timer_dist = TCNT1;
 		
 		// set interrupt status
-		int_stat = INTERRUPT_RISING;
+		status = RISING_EDGE;
 	}
 }
 
+//Calculate distance in cm
 int calculate_distance(void){
 	return timer_dist * 340 / 58 / 10;
 }
 
+//Calculate frequency distance.
 int frequency_distance(void){
 	return 2500 - (timer_dist * 340 / 20);
-}
-
-//DEBUG
-int get_timer_dist(void){
-	return timer_dist * 340 / 20;
 }
 
 
